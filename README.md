@@ -1,3 +1,23 @@
+# INSTAGRAM
+
+INSTAGRAM-frontend
+
+프로젝트 상태 : 진행중
+프로젝트 기간 : 2022년 10월 12일 ~ 
+
+프로젝트 참여 개발자
+- 김요한 (역할분담 : )
+- 이강현 (역할분담 : )
+- 노유미 (역할분담 : )
+- 김영일 (역할분담 : )
+
+
+
+
+
+############################################### 아래는 node 기본 실행 설명 ##################################################
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
