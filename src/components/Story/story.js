@@ -6,13 +6,13 @@ export function Story() {
             
             <div className="user-elements" >
                 <div>
-                    <img className="image-user-story" src="https://github.com/peas.png"  />
+                    <img className="image-user-story" src="https://github.com/peas.png" alt="profile" />
                 </div>
                 <span>kimyohan</span>
             </div>
             <div className="user-elements" >
                 <div>
-                    <img className="image-user-story" src="https://github.com/peas.png"  />
+                    <img className="image-user-story" src="https://github.com/peas.png" alt="profile" />
                 </div>
                 <span>kimyohan2</span>
             </div>

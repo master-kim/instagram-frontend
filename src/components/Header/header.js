@@ -12,7 +12,7 @@ export function Header() {
     return (
         <header className="header" >
             <div className="container" >
-                <img className="logo" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" />
+                <img className="logo" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="profile"/>
                 <div className="input-fake">
                     <IconContext.Provider value={{ color: '#8e8e8e' }}>
                         <AiOutlineSearch />
@@ -37,7 +37,7 @@ export function Header() {
                             <FiHeart />
                         </div>
                     </IconContext.Provider>
-                    <img className="img-user" src="https://github.com/gabrieldiasss.png" />
+                    <img className="img-user" src="https://github.com/gabrieldiasss.png" alt="profile"/>
                 </div>
             </div>
         </header>

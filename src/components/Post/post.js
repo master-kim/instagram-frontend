@@ -9,7 +9,7 @@ export function Post() {
         <>
             <header className="header-post" >
                 <div className="infos-post" >
-                    <img className="img-header-post" src="https://github.com/maykbrito.png" />
+                    <img className="img-header-post" src="https://github.com/maykbrito.png" alt="profile"/>
                     <p>maykbrito</p>
                 </div>
                     <FiMoreHorizontal />

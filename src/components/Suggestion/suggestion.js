@@ -38,7 +38,7 @@ export function Suggestion() {
             <div className="user-suggestion" >
                 {slice.map((suggestion, key) => (
                      <div className="infos-suggestion" key={key}>
-                        <img src={`https://github.com/${suggestion.login}.png`} />
+                        <img src={`https://github.com/${suggestion.login}.png`} alt="profile"/>
                         <div className="info-suggestion" >
                             <span>{suggestion.login}</span>
                             <p>Seguido por filipedechamps</p>
