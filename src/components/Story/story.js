@@ -8,7 +8,7 @@ export function Story() {
                 <div>
                     <img className="image-user-story" src="https://github.com/peas.png"  />
                 </div>
-                <span>kimyohan333</span>
+                <span>kimyohan</span>
             </div>
             <div className="user-elements" >
                 <div>
