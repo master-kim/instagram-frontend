@@ -6,9 +6,9 @@ import {FiHeart} from 'react-icons/fi'
 
 import { IconContext } from 'react-icons'
 
-import './header.css'
+import './Header.css'
 
-export function Header() {
+function Header() {
     return (
         <header className="header" >
             <div className="container" >
@@ -43,3 +43,5 @@ export function Header() {
         </header>
     )
 }
+
+export default Header;
