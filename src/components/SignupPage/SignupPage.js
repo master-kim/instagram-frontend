@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
-import "./LoginPage.css";
-import insta_image from "../../images/insta_image.svg";
+import React from "react";
+import "./SignupPage.css";
 import insta_logo from "../../images/insta_logo.png";
-function LoginPage() {
-  return (
-    <>
-      <div className="login--form-container">
-        <img className="login-img" src={insta_image} alt="website login" />
+
+function SignupPage() {
+  return(
+  <>
+    <div className="login--form-container">
 
         <form className="form-container">
           <img className="login-website-logo-desktop-img" src={insta_logo} />
@@ -36,16 +35,39 @@ function LoginPage() {
               placeholder="Password"
             />
           </div>
-
-          <button className="login-button" type="submit">
-            Sign In
-          </button>
+          <div className="input-container">
+            <label className="input-label" htmlFor="password-check">
+              PASSWORD CHECK
+            </label>
+            <input
+              type="password"
+              id="password-check"
+              //   value={password}
+              className="password-input-field"
+              //   onChange={this.onChangePassword}
+              placeholder="Password Check"
+            />
+          </div>
+          <div className="input-container">
+            <label className="input-label" htmlFor="email">
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              //   value={password}
+              className="email-input-field"
+              //   onChange={this.onChangePassword}
+              placeholder="Email"
+            />
+          </div>
           <button className="login-button" type="submit">
             Register
           </button>
         </form>
       </div>
-    </>
-  );
+  </>
+  )
 }
-export default LoginPage;
+
+export default SignupPage;

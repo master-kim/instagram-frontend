@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes, Redirect } from "react-router-d
 import Header from "./components/Header/Header";
 import { Layout } from "./components/Layout/layout.js";
 import LoginPage from "./components/LoginPage/LoginPage";
+import SignupPage from "./components/SignupPage/SignupPage";
 import "./css/common/global.css";
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
       {/* <Layout /> */}
       <Routes>
         <Route exact path="/login" element={<LoginPage />} />
+        <Route exact path="/signup" element={<SignupPage />} />
         {/* <ProtectedRoute exact path="/" component={Home} /> */}
         {/* <ProtectedRoute exact path="/my-profile" component={MyProfile} /> */}
         {/* <ProtectedRoute
