@@ -2,7 +2,7 @@
     background: var(--background);
     border-bottom: 1px solid var(--border);
 
-    position: fixed;
+    /* position: fixed; */
     top: 0;
     width: 100%;
 }
@@ -39,6 +39,7 @@
 .input-fake input {
     font-size: 14px;
     padding: 0 7px;
+    border: 0;
 }
 
 .menu-icons {

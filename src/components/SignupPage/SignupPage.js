@@ -1,14 +1,14 @@
 import React from "react";
-import "./SignupPage.css";
 import insta_logo from "../../images/insta_logo.png";
+import "./SignupPage.css";
 
 function SignupPage() {
   return(
   <>
-    <div className="login--form-container">
+    <div className="signup--form-container">
 
         <form className="form-container">
-          <img className="login-website-logo-desktop-img" src={insta_logo} />
+          <img className="signup-website-logo-desktop-img" src={insta_logo} />
           <div className="input-container">
             <label className="input-label" htmlFor="username">
               USERNAME
@@ -61,7 +61,7 @@ function SignupPage() {
               placeholder="Email"
             />
           </div>
-          <button className="login-button" type="submit">
+          <button className="register-button" type="submit">
             Register
           </button>
         </form>

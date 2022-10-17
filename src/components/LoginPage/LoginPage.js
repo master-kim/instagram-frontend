@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import "./LoginPage.css";
 import insta_image from "../../images/insta_image.svg";
 import insta_logo from "../../images/insta_logo.png";
+import "./LoginPage.css";
+
 function LoginPage() {
   return (
     <>
@@ -15,7 +16,7 @@ function LoginPage() {
               USERNAME
             </label>
             <input
-              type="text"
+              type="text"   
               id="username"
               //   value={username}
               className="username-input-field"
@@ -42,6 +43,9 @@ function LoginPage() {
           </button>
           <button className="login-button" type="submit">
             Register
+          </button>
+          <button className="login-button" type="submit">
+            Find ID or Password
           </button>
         </form>
       </div>
