@@ -1,11 +1,11 @@
-import './post.css'
+import './PostList.css'
 import { FiMoreHorizontal, FiSend } from 'react-icons/fi'
 import {IoMdHeartEmpty} from 'react-icons/io'
 import {BsChat, BsEmojiSmile, BsBookmark} from 'react-icons/bs'
 import { IconContext } from 'react-icons/lib'
 
 import React, { useState, useEffect } from 'react';
-import commonAxios from '../../commonAxios';
+import commonAxios from '../../../commonAxios';
 
 export function Post() {
 

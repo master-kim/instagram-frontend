@@ -1,7 +1,7 @@
 import './Layout.css'
-import { Story } from '../Story/story.js'
-import { Post } from '../Post/post.js'
-import { Suggestion } from '../Suggestion/suggestion.js'
+import { Story } from '../StoryList/StoryList'
+import { Post } from '../PostList/PostList'
+import { Suggestion } from '../SuggestionList/SuggestionList'
 
 /* 
  * 설명 : Layout.js
@@ -10,8 +10,7 @@ import { Suggestion } from '../Suggestion/suggestion.js'
  * ------------------------------------------------------------- 
  * 2022.10.13    김영일    최초작성 
  * -------------------------------------------------------------
-*/
-
+ */
 
 export function Layout() {
     return (

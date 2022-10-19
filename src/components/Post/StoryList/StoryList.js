@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import commonAxios from '../../commonAxios';
-import './story.css';
+import commonAxios from '../../../commonAxios';
+import './StoryList.css';
 
 /* 
  * 설명 : story.js 

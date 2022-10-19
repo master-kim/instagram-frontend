@@ -1,13 +1,13 @@
 import { BrowserRouter as Router, Route, Routes, Redirect } from "react-router-dom";
 import Header from "./components/Header/Header";
-import { Layout } from "./components/Layout/Layout";
+import { Layout } from "./components/Post/Layout/Layout";
 import SignupPage from "./components/SignupPage/SignupPage";
 import LoginPage from "./components/LoginPage/LoginPage";
 import PersonalPage from "./components/PersonalPage/PersonalPage";
 import "./css/common/global.css";
 
 /* 
- * 설명 : commonAxios.js
+ * 설명 : App.js
  * ------------------------------------------------------------- 
  * 작업일         작업자    작업내용
  * ------------------------------------------------------------- 

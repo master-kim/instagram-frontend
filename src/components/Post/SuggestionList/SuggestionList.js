@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import './suggestion.css'
+import commonAxios from '../../../commonAxios';
+import './SuggestionList.css'
 
 /* 
  * 설명 : suggestion.js
