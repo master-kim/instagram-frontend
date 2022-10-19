@@ -54,14 +54,15 @@ function LoginPage() {
     commonAxios('/user/userLogin' , inputs , callback);
   }
 
-  if ( result.resultCd === 'SUCC' ) {
-    navigate('/mainpage')
+  if (loading) {
   } else {
-    if (loading) {
+    if ( result.resultCd === 'SUCC' ) {
+      navigate('/mainpage')
     } else {
       alert(result.resultMsg);
     }
   }
+
 
   return (
     <>
