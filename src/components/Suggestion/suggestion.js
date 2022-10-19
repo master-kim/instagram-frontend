@@ -1,6 +1,15 @@
 import { useEffect, useState } from 'react'
 import './suggestion.css'
 
+/* 
+ * 설명 : suggestion.js
+ * ------------------------------------------------------------- 
+ * 작업일         작업자    작업내용
+ * ------------------------------------------------------------- 
+ * 2022.10.13    김영일    최초작성 
+ * -------------------------------------------------------------
+*/
+
 export function Suggestion() {
     const [suggestions, setSuggestions] = useState([])
     const [limitUsers, setLimitUsers] = useState(5)
