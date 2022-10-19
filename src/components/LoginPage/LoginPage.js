@@ -44,25 +44,23 @@ function LoginPage() {
   /* 2022.10.19.김요한.추가 - 백엔드와 연결 후 사용하는 데이터 */
   const [loading, setLoading] = useState(true);
   const [result, resultData] = useState([]);
+
   function callback(data) {
     resultData(data);
     setLoading(false);
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    commonAxios('/user/userLogin' , inputs , callback);
-  }
 
-  if (loading) {
-  } else {
-    if ( result.resultCd === 'SUCC' ) {
-      navigate('/mainpage')
-    } else {
-      alert(result.resultMsg);
-    }
+      await commonAxios('/user/userLogin' , inputs , callback);
+      /* result 데이터에 담고 사용할 때 담겨있어도 바로 사용하지 못하는 이유 모르는 상태 */
+      if ( result.resultCd === 'SUCC' ) {
+        navigate('/mainpage')
+      } else {
+        alert(result.resultMsg);
+      }
   }
-
 
   return (
     <>
