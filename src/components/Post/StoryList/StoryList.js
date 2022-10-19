@@ -12,7 +12,7 @@ import './StoryList.css';
  * -------------------------------------------------------------
 */
 
-export function Story() {
+export function StoryList() {
 
     const [loading, setLoading] = useState(true);
     const [storyList, resultData] = useState([]);

@@ -1,7 +1,7 @@
 import './Layout.css'
-import { Story } from '../StoryList/StoryList'
-import { Post } from '../PostList/PostList'
-import { Suggestion } from '../SuggestionList/SuggestionList'
+import { StoryList } from '../StoryList/StoryList'
+import { PostList } from '../PostList/PostList'
+import { SuggestionList } from '../SuggestionList/SuggestionList'
 
 /* 
  * 설명 : Layout.js
@@ -18,13 +18,13 @@ export function Layout() {
             <div className="MainGrid" >
                 <div className="first-column" style={{gridArea: "firstColumn"}}>
                     <div className="box" >
-                        <Story />
+                        <StoryList />
                     </div>
-                        <Post />
+                        <PostList />
                 </div>
                 <div style={{ gridArea: "secondColumn" }} >
                     <div className="suggestionBox" >
-                        <Suggestion />
+                        <SuggestionList />
                     </div>
                 </div>
             </div>

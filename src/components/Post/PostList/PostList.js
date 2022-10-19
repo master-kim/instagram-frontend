@@ -7,7 +7,7 @@ import { IconContext } from 'react-icons/lib'
 import React, { useState, useEffect } from 'react';
 import commonAxios from '../../../commonAxios';
 
-export function Post() {
+export function PostList() {
 
     const [loading, setLoading] = useState(true);
     const [postList, resultData] = useState([]);

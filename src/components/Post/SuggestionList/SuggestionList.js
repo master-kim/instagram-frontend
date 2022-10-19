@@ -11,7 +11,8 @@ import './SuggestionList.css'
  * -------------------------------------------------------------
 */
 
-export function Suggestion() {
+export function SuggestionList() {
+    
     const [suggestions, setSuggestions] = useState([])
     const [limitUsers, setLimitUsers] = useState(5)
     const slice = suggestions.slice(0, limitUsers)
