@@ -12,7 +12,7 @@ import './SuggestionList.css'
 */
 
 export function SuggestionList() {
-    
+
     const [suggestions, setSuggestions] = useState([])
     const [limitUsers, setLimitUsers] = useState(5)
     const slice = suggestions.slice(0, limitUsers)
@@ -32,7 +32,7 @@ export function SuggestionList() {
     return (
         <div className="container-suggestion">
             <div className="header-suggestion" >
-                <img src={`https://github.com/gabrieldiasss.png`} />
+                <img src={`https://github.com/gabrieldiasss.png`} alt="profile"/>
                 <div className="user-infos-suggestion" >
                     <div className="infos" >
                         <span>gbrldiass</span>

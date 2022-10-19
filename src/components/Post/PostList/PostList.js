@@ -1,11 +1,21 @@
-import './PostList.css'
+import React, { useState, useEffect } from 'react';
 import { FiMoreHorizontal, FiSend } from 'react-icons/fi'
 import {IoMdHeartEmpty} from 'react-icons/io'
 import {BsChat, BsEmojiSmile, BsBookmark} from 'react-icons/bs'
 import { IconContext } from 'react-icons/lib'
-
-import React, { useState, useEffect } from 'react';
 import commonAxios from '../../../commonAxios';
+import './PostList.css'
+
+
+/* 
+ * 설명 : Layout.js
+ * ------------------------------------------------------------- 
+ * 작업일         작업자    작업내용
+ * ------------------------------------------------------------- 
+ * 2022.10.13    김영일    최초작성 
+ * 2022.10.19    김요한    게시글 데이터 바인딩 완료
+ * -------------------------------------------------------------
+ */
 
 export function PostList() {
 
@@ -37,7 +47,7 @@ export function PostList() {
                             <FiMoreHorizontal />
                     </header>
                     <div className="img-post" >
-                        <img src="https://github.com/maykbrito.png"/>
+                        <img src="https://github.com/maykbrito.png" alt="profile"/>
                     </div>
                     <div className="footer-post" >
                     <IconContext.Provider value={{size: "30px"}} >
