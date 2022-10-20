@@ -39,7 +39,7 @@ export function StoryList() {
                         {/* <img className="image-user-story" src="C:\dev\06.img" alt="profile" /> */}
                         <img className="image-user-story" src="https://github.com/peas.png" alt="profile" />
                     </div>
-                    <span style={{textAlign: "center"}}>{user.userNick}</span>       
+                    <span style={{textAlign: "center"}}>{user.userentity.userNick}</span>       
                 </div> 
             ))}
         </div>

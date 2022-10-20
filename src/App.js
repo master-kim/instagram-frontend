@@ -19,7 +19,6 @@ import "./css/common/global.css";
 function App() {
   return (
     <Router>
-      {/* <Header exact path="/mainpage" element={<Header />}/> */}
       {/* <Header /> */}
       {/* <Layout /> */}
       <Routes>
