@@ -19,9 +19,10 @@ import "./css/common/global.css";
 function App() {
   return (
     <Router>
-      {/* <Header /> */}
-      {/* <Layout /> */}
+     {/* <Header /> 
+      <Layout /> */}
       <Routes>
+
         <Route exact path="/" element={<LoginPage />} />
         <Route exact path="/login" element={<LoginPage />} />
         <Route exact path="/signup" element={<SignupPage />} />

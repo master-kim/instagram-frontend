@@ -27,6 +27,19 @@ function SignupPage() {
         <form className="form-container">
           <img className="signup-website-logo-desktop-img" src={insta_logo} />
           <div className="input-container">
+            <label className="input-label" htmlFor="userid">
+              User ID
+            </label>
+            <input
+              type="text"
+              id="userid"
+              //   value={username}
+              className="userid-input-field"
+              //   onChange={this.onChangeUsername}
+              placeholder="User ID"
+            />
+          </div>
+          <div className="input-container">
             <label className="input-label" htmlFor="username">
               USERNAME
             </label>
@@ -65,19 +78,7 @@ function SignupPage() {
               placeholder="Password Check"
             />
           </div>
-          <div className="input-container">
-            <label className="input-label" htmlFor="email">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              //   value={password}
-              className="email-input-field"
-              //   onChange={this.onChangePassword}
-              placeholder="Email"
-            />
-          </div>
+          
           <button className="register-button" type="submit">
             Register
           </button>

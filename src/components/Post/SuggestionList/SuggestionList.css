@@ -38,9 +38,10 @@
     font-weight: 500;
     color: var(--quartary);
     cursor: pointer;
+    border: 0;
 }
 
-.header-main-suggestion  {
+.header-main-suggestion {
     display: flex;
     justify-content: space-between;
 
@@ -100,6 +101,7 @@
     cursor: pointer;
     color: var(--quartary);
     font-weight: 500;
+    border: 0;
 }
 
 .footer-suggestion {
