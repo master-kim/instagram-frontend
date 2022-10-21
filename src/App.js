@@ -4,6 +4,7 @@ import { Layout } from "./components/Post/Layout/Layout";
 import SignupPage from "./components/SignupPage/SignupPage";
 import LoginPage from "./components/LoginPage/LoginPage";
 import PersonalPage from "./components/PersonalPage/PersonalPage";
+import SinglePostPage from "./components/SinglePostPage/SinglePostPage";
 import "./css/common/global.css";
 
 /* 
@@ -28,6 +29,7 @@ function App() {
         <Route exact path="/signup" element={<SignupPage />} />
         <Route exact path="/personal-page" element={<PersonalPage />} />
         <Route exact path="/mainpage" element={<Layout />}/>
+        <Route exact path="/single-post-page" element={<SinglePostPage />}/>
         {/* <ProtectedRoute exact path="/" component={Home} /> */}
         {/* <ProtectedRoute exact path="/my-profile" component={MyProfile} /> */}
         {/* <ProtectedRoute
