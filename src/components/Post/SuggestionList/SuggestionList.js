@@ -60,7 +60,7 @@ export function SuggestionList() {
                
             </div>
             <footer className="footer-suggestion" >
-                <p>Sobre &bull; Ajuda &bull; Imprensa &bull; API &bull; Carreiras &bull; Privacidade &bull; Termos &bull; Localizações &bull; Principais contas &bull; Hashtags &bull; idioma</p>
+                <p>깃허브 주소 &bull; 개발자 소개 ......</p>
                 <p>&copy; 2022 INSTAGRAM FROM META</p>
             </footer>
         </div>

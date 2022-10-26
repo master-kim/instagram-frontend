@@ -22,5 +22,8 @@ export default async function commonAxios(url, params , callback) {
     }
   ).then(function (response) {
     callback(response.data);
+  })
+  .catch((err) => {
+    callback(err.response.data.errors);
   });
 }

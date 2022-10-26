@@ -2,9 +2,10 @@ import insta_image from "../../images/insta_image.svg";
 import insta_logo from "../../images/insta_logo.png";
 import "./LoginPage.css";
 
-import React, { useState, useEffect } from "react";
+import React, { useState , useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import commonAxios from '../../commonAxios';
+import { useCookies } from 'react-cookie'; // useCookies import
 
 /* 
  * 설명 : LoginPage.js 
@@ -14,10 +15,13 @@ import commonAxios from '../../commonAxios';
  * 2022.10.13    김영일    최초작성 
  * 2022.10.19    김요한    - 로그인 form 데이터 백엔드 연결 
  *                        - 회원가입 페이지 이동 완료
+ * 2022.10.24    김요한    로그인 프로세스 완료 (input id = userId , input password = userPwd)
  * -------------------------------------------------------------
 */
 
 function LoginPage() {
+
+	const [cookies, setCookie , removeCookie] = useCookies(['loginId']); // 쿠키 훅 
 
   /* 2022.10.19.김요한.추가 - 페이지 이동 */
   const navigate = useNavigate();
@@ -28,11 +32,11 @@ function LoginPage() {
 
   /* 2022.10.19.김요한.추가 - form 데이터 (id , password) */
   const [inputs, setInputs] = useState({
-    userid: '',
-    password: ''
+    userId: '',
+    userPwd: ''
   });
   
-  const { userid, password } = inputs; 
+  const { userId, userPwd } = inputs; 
   const onChange = (e) => {
     const { value, id } = e.target;  // 우선 e.target 에서 id 과 value 를 추출
     setInputs({
@@ -50,12 +54,16 @@ function LoginPage() {
 
     function callback(data) {
       if ( data.resultCd === 'SUCC' ) {
+        setCookie('loginId', inputs.userId);// 쿠키에 토큰 저장
         navigate('/mainpage')
+      } else if (data.resultCd === 'FAIL') {
+        alert( data.resultMsg )
       } else {
-        alert(data.resultMsg);
+        {data.map((result) => (
+          alert(result.resultMsg)
+        ))}
       }
     }
-    
   }
 
   return (
@@ -64,28 +72,28 @@ function LoginPage() {
         <img className="login-img" src={insta_image} alt="website login" />
 
         <form className="form-container" onSubmit={handleSubmit}>
-          <img className="login-website-logo-desktop-img" src={insta_logo} />
+          <img className="login-website-logo-desktop-img" src={insta_logo} alt="logo img"/>
           <div className="input-container">
-            <label className="input-label" htmlFor="userid">
+            <label className="input-label" htmlFor="userId">
               USERID
             </label>
             <input
               type="text"   
-              id="userid" 
+              id="userId" 
                 className="username-input-field"
-                onChange={onChange} value={userid}
+                onChange={onChange} value={userId}
                 placeholder="Userid"
             />
           </div>
           <div className="input-container">
-            <label className="input-label" htmlFor="password">
+            <label className="input-label" htmlFor="userPwd">
               PASSWORD
             </label>
             <input
               type="password"
-              id="password"
+              id="userPwd"
                 className="password-input-field"
-                onChange={onChange} value={password}
+                onChange={onChange} value={userPwd}
                 placeholder="Password"
             />
           </div>

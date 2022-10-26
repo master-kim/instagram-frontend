@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import commonAxios from '../../commonAxios';
+import * as commonUtils from "../../commonUtils";
+
 import insta_logo from "../../images/insta_logo.png";
 import "./SignupPage.css";
 
@@ -11,6 +14,7 @@ import "./SignupPage.css";
  * 2022.10.13    김영일    최초작성
  * 2022.10.19    김요한    회원가입 취소 버튼 추가 (취소 시 login 페이지로 변경)
  * 2022.10.20    김영일    input 사항들 추가
+ * 2022.10.24    김요한    회원가입 양식 유효성 검증 및 데이터 처리 진행중
  * -------------------------------------------------------------
  */
 
@@ -20,10 +24,71 @@ function SignupPage() {
     navigate(url);
   };
 
+  const [inputs, setInputs] = useState({
+    userId         : '',
+    userNick       : '',
+    userName       :  '',
+    userPwd        : '',
+    userPwdChk     : '',
+    userEmail      : '',
+    userPhone      : ''
+  });
+
+  const { 
+    userId,    
+    userNick, 
+    userName,  
+    userPwd,   
+    userPwdChk,
+    userEmail, 
+    userPhone 
+  } = inputs; 
+
+  const onChange = (e) => {
+    const { value, id } = e.target;  
+    setInputs({
+      ...inputs,                     
+      [id]: value                    
+    });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const result = commonUtils.isEqualCheck(userPwd , userPwdChk);
+
+    if (result === true) {
+      await commonAxios('/user/userRegister' , inputs , callback);
+      function callback(data) {
+        if ( data.resultCd === 'SUCC' ) {
+          alert( data.resultMsg )
+          navigate('/login')
+        } else if (data.resultCd === 'FAIL') {
+          alert( data.resultMsg )
+        } else {
+
+          const dataCnt = Object.keys(data).length;
+
+          if (dataCnt > 1) {
+            alert("모든 입력사항을 정확하게 입력해주세요.")
+          } else {
+            alert(data[0].resultMsg)
+          }
+          /* {data.map((result) => (
+            alert(result.resultMsg)
+          ))} */
+        }
+      }
+    } else {
+      alert("비밀번호와 비밀번호 확인 부분이 동일하지 않습니다.")
+    }
+
+  }
+
   return (
     <>
       <div className="signup--form-container">
-        <form className="form-container">
+        <form className="form-container" onSubmit={handleSubmit}>
           <img className="signup-website-logo-desktop-img" src={insta_logo} />
           <div className="input-container">
             <label className="input-label" htmlFor="userid">
@@ -31,10 +96,9 @@ function SignupPage() {
             </label>
             <input
               type="text"
-              id="userid"
-              //   value={username}
+              id="userId"
               className="userid-input-field"
-              //   onChange={this.onChangeUsername}
+              onChange={onChange} value={userId}
               placeholder="User ID"
             />
           </div>
@@ -44,10 +108,9 @@ function SignupPage() {
             </label>
             <input
               type="text"
-              id="username"
-              //   value={username}
+              id="userName"
               className="username-input-field"
-              //   onChange={this.onChangeUsername}
+              onChange={onChange} value={userName}
               placeholder="Username"
             />
           </div>
@@ -57,10 +120,10 @@ function SignupPage() {
             </label>
             <input
               type="text"
-              id="usernickname"
+              id="userNick"
               //   value={username}
               className="usernickname-input-field"
-              //   onChange={this.onChangeUsername}
+              onChange={onChange} value={userNick}
               placeholder="User Nickname"
             />
           </div>
@@ -70,10 +133,9 @@ function SignupPage() {
             </label>
             <input
               type="password"
-              id="password"
-              //   value={password}
+              id="userPwd"
               className="password-input-field"
-              //   onChange={this.onChangePassword}
+              onChange={onChange} value={userPwd}
               placeholder="Password"
             />
           </div>
@@ -83,10 +145,9 @@ function SignupPage() {
             </label>
             <input
               type="password"
-              id="password-check"
-              //   value={password}
+              id="userPwdChk"
               className="password-input-field"
-              //   onChange={this.onChangePassword}
+              onChange={onChange} value={userPwdChk}
               placeholder="Password Check"
             />
           <div className="input-container">
@@ -95,10 +156,9 @@ function SignupPage() {
             </label>
             <input
               type="email"
-              id="email"
-              //   value={password}
+              id="userEmail"
               className="email-input-field"
-              //   onChange={this.onChangePassword}
+              onChange={onChange} value={userEmail}
               placeholder="Email"
             />
           </div>
@@ -109,10 +169,9 @@ function SignupPage() {
             </label>
             <input
               type="text"
-              id="phone"
-              //   value={password}
+              id="userPhone"
               className="phone-input-field"
-              //   onChange={this.onChangePassword}
+              onChange={onChange} value={userPhone}
               placeholder="Phone Number"
             />
           </div>
