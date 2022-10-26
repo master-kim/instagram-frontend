@@ -59,9 +59,17 @@ function LoginPage() {
       } else if (data.resultCd === 'FAIL') {
         alert( data.resultMsg )
       } else {
-        {data.map((result) => (
+
+        const dataCnt = Object.keys(data).length;
+
+        if (dataCnt > 1) {
+          alert("모든 입력사항을 정확하게 입력해주세요.")
+        } else {
+          alert(data[0].resultMsg)
+        }
+        /* {data.map((result) => (
           alert(result.resultMsg)
-        ))}
+        ))} */
       }
     }
   }
