@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 import { IconContext } from 'react-icons'
 import commonAxios from '../../commonAxios';
-import { useCookies } from 'react-cookie'; // useCookies import
+import { useCookies } from 'react-cookie';
 import './Header.css'
 
 /* 
@@ -82,7 +82,7 @@ function Header() {
                         - 추후 탐색 기능 추가 여부 논의
                         */}
                         <img className="img-user" src="https://github.com/gabrieldiasss.png" alt="profile" onClick={() => pageMove('/personal-page')}/>
-                            <span>{cookies.loginId}</span>
+                        <span onClick={() => pageMove('/personal-page')} >{cookies.loginId}</span>
                         <div>
                             <FiArrowRightCircle onClick={() => logout()} />
                         </div>
