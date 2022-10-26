@@ -26,7 +26,7 @@ import './Header.css'
 
 function Header() {
 
-    const [cookies, setCookie , removeCookie] = useCookies(['loginId']); // 쿠키 훅 
+    const [cookies, setCookie , removeCookie] = useCookies(['loginCookie']); // 쿠키 훅 
 
     const navigate = useNavigate();
 
@@ -42,6 +42,7 @@ function Header() {
             if ( data.resultCd === 'SUCC' ) {
             navigate('/login')
             removeCookie('loginId'); // 쿠키 loginId를 지운다
+            removeCookie('loginNick'); // 쿠키 loginId를 지운다
             }  else {
             alert("서버오류")
             }

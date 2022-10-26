@@ -21,7 +21,7 @@ import { useCookies } from 'react-cookie'; // useCookies import
 
 function LoginPage() {
 
-	const [cookies, setCookie , removeCookie] = useCookies(['loginId']); // 쿠키 훅 
+	const [cookies, setCookie , removeCookie] = useCookies(['loginCookie']); // 쿠키 훅 
 
   /* 2022.10.19.김요한.추가 - 페이지 이동 */
   const navigate = useNavigate();
@@ -54,7 +54,8 @@ function LoginPage() {
 
     function callback(data) {
       if ( data.resultCd === 'SUCC' ) {
-        setCookie('loginId', inputs.userId);// 쿠키에 토큰 저장
+        setCookie('loginId', data.userId);      // 쿠키에 토큰 저장
+        setCookie('loginNick', data.userNick);  // 쿠키에 토큰 저장
         navigate('/mainpage')
       } else if (data.resultCd === 'FAIL') {
         alert( data.resultMsg )

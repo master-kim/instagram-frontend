@@ -19,7 +19,7 @@ import React, { useEffect } from 'react';
 
 export function Layout() {
 
-    const [cookies, setCookie , removeCookie] = useCookies(['loginId']); // 쿠키 훅 
+    const [cookies, setCookie , removeCookie] = useCookies(['loginCookie']); // 쿠키 훅 
     const navigate = useNavigate();
 
     const userId = cookies.loginId; // 쿠키에서 id 를 꺼내기
