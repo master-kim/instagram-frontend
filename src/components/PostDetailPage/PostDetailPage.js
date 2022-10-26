@@ -4,7 +4,7 @@ import {IoMdHeartEmpty} from 'react-icons/io'
 import {BsChat, BsEmojiSmile, BsBookmark} from 'react-icons/bs'
 import { IconContext } from 'react-icons/lib'
 import commonAxios from '../../commonAxios';
-import './SinglePostPage.css'
+import './PostDetailPage.css'
 
 
 /* 
@@ -16,7 +16,7 @@ import './SinglePostPage.css'
  * -------------------------------------------------------------
  */
 
-export default function SinglePostPage() {
+export default function PostDetailPage() {
 
     const [loading, setLoading] = useState(false);
     const [postList, resultData] = useState([]);

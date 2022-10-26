@@ -70,7 +70,7 @@ function PersonalPage() {
 
 
 {/* post contianer */}
-<div className="container">
+<div className="personalPage-container">
 
   <div className="gallery">
 
