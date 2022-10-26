@@ -26,7 +26,7 @@ function PersonalPage() {
       <Header   />
     
 
-<div className="personal-container">
+<div className="personalPage-container">
 
   <div className="profile">
 
