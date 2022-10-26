@@ -23,34 +23,36 @@ export function Layout() {
     const navigate = useNavigate();
 
     const userId = cookies.loginId; // 쿠키에서 id 를 꺼내기
-    
+
     useEffect(() => {
 
         if (userId === undefined) {
             alert('세션이 만료되었습니다.')
             navigate('/login')
-        } else {
-        }
+        } else {;}
         return () => {
         };
     }, []); 
     
-    return (
-        <>
-            <Header />
-            <div className="MainGrid" >
-                <div className="first-column" style={{gridArea: "firstColumn"}}>
-                    <div className="box" >
-                        <StoryList />
+    if (userId === undefined) {
+    } else {
+        return (
+            <>
+                <Header />
+                <div className="MainGrid" >
+                    <div className="first-column" style={{gridArea: "firstColumn"}}>
+                        <div className="box" >
+                            <StoryList />
+                        </div>
+                            <PostList />
                     </div>
-                        <PostList />
-                </div>
-                <div style={{ gridArea: "secondColumn" }} >
-                    <div className="suggestionBox" >
-                        <SuggestionList />
+                    <div style={{ gridArea: "secondColumn" }} >
+                        <div className="suggestionBox" >
+                            <SuggestionList />
+                        </div>
                     </div>
                 </div>
-            </div>
-        </>
-    )
+            </>
+        )
+    }
 }
