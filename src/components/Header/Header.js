@@ -83,7 +83,7 @@ function Header() {
                         - 추후 탐색 기능 추가 여부 논의
                         */}
                         <img className="img-user" src="https://github.com/gabrieldiasss.png" alt="profile" onClick={() => pageMove('/personal-page')}/>
-                        <span onClick={() => pageMove('/personal-page')} >{cookies.loginId}</span>
+                        <span onClick={() => pageMove('/personal-page')} >{cookies.loginNick}</span>
                         <div>
                             <FiArrowRightCircle onClick={() => logout()} />
                         </div>
