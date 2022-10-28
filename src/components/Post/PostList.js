@@ -43,6 +43,19 @@ function PostList() {
     const [loading, setLoading] = useState(true);
     const [totalList, resultData] = useState([]);
     
+    /**
+     * 2022.10.28.김요한.추가 - 프론트 , 백엔드 데이터 송/수신 내용
+     * 
+     * 프론트엔드 request 데이터 형태
+     * -> 데이터 가져오는 곳이므로 현재는 없음
+     * 
+     * 백엔드 response 데이터 형태
+     * -> totalList : {
+     *       "storyList"  : {.... , .... },
+     *       "postList"   : {.... , .... } ,
+     *       "followList" : {.... , .... } 
+     *    }
+     */
     useEffect(() => {
 
         if (userId === undefined) {
