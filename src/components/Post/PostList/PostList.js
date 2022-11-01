@@ -1,4 +1,4 @@
-import Header from "../Header/Header";
+import Header from "../../Header/Header";
 import './PostList.css'
 
 /** 
@@ -20,7 +20,7 @@ import { SuggestionList } from '../SuggestionList/SuggestionList' */
 import { useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import React, { useState , useEffect } from 'react';
-import commonAxios from '../../commonAxios';
+import commonAxios from '../../../commonAxios';
 /* 
  * 설명 : PostList.js
  * ------------------------------------------------------------- 

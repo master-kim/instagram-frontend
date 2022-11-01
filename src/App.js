@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes, Redirect } from "react-router-dom";
 import Header from "./components/Header/Header";
-import PostPage  from "./components/Post/PostList";
+import PostPage  from "./components/Post/PostList/PostList";
 import SignupPage from "./components/SignupPage/SignupPage";
 import LoginPage from "./components/LoginPage/LoginPage";
 import PersonalPage from "./components/PersonalPage/PersonalPage";
@@ -19,12 +19,12 @@ import PostDetailPage from "./components/PostDetailPage/PostDetailPage";
 */
 
 function App() {
+
   return (
     <Router>
      {/* <Header /> 
       <Layout /> */}
       <Routes>
-
         <Route exact path="/" element={<LoginPage />} />
         <Route exact path="/login" element={<LoginPage />} />
         <Route exact path="/signup" element={<SignupPage />} />
