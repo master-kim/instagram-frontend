@@ -67,14 +67,14 @@ function LoginPage(props) {
     await commonAxios('/user/userLogin' , inputs , callback);
 
     function callback(data) {
-      if ( data.resultCd === 'SUCC' ) {
+      if ( data[0].resultCd === 'SUCC' ) {
         setCookie('loginId', data.userId);      // 쿠키에 토큰 저장
         setCookie('loginNick', data.userNick);  // 쿠키에 토큰 저장
         navigate('/mainpage')
       } else {;}
       setResultData(data);
+      setModalOpen(true);
     }
-    setModalOpen(true);
   }
 
   return (

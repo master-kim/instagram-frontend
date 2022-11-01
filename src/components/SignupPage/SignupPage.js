@@ -75,7 +75,7 @@ function SignupPage(props) {
       await commonAxios('/user/userRegister' , inputs , callback);
       
       function callback(data) {
-        if ( data.resultCd === 'SUCC' ) {
+        if ( data[0].resultCd === 'SUCC' ) {
           navigate('/login')
         } else {;}
         setResultData(data);
