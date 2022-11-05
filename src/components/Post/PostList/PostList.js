@@ -31,14 +31,13 @@ import commonAxios from '../../../commonAxios';
  * 2022.10.26    김요한    쿠키 추가
  * 2022.10.28    김요한    컴포넌트 나누어 놓은거 합치기 (백엔드 세번 호출 불필요 -> 1번으로 변경 위함)
  * 2022.11.05    이강현    게시글 상세페이지 호출기능 추가
+ * 2022.11.05    김요한    팔로우 리스트 -> 팔로잉 리스트로 변경 , 게시글 파일 데이터 가져오기 추가
  * -------------------------------------------------------------
  */
 
 function PostList() {
 
     const [cookies, setCookie , removeCookie] = useCookies(['loginCookie']); // 쿠키 훅 
-    
-
 
     const userId = cookies.loginId; // 쿠키에서 id 를 꺼내기
 
@@ -66,7 +65,7 @@ function PostList() {
      * -> totalList : {
      *       "storyList"  : {.... , .... },
      *       "postList"   : {.... , .... } ,
-     *       "followList" : {.... , .... } 
+     *       "followingList" : {.... , .... } 
      *    }
      */
 
@@ -125,7 +124,7 @@ function PostList() {
                             </div>
                         </div>
                         {/* 게시글 영역 */}
-                        {totalList.postList.map((post) => (
+                        {totalList.postList.map((post, index) => (
                             <div className="box" style={{margin: "30px 0"}} >
                                 <header className="header-post" >
                                     <div className="infos-post" >
@@ -136,7 +135,7 @@ function PostList() {
                                         <FiMoreHorizontal />
                                 </header>
                                 <div className="img-post" >
-                                    <img onClick={ () => {pageMove(post.postId);} } src="https://github.com/maykbrito.png" alt="profile"/>
+                                    <img onClick={ () => {pageMove(post.postId);} } src={totalList.fileList[index].uuidFileNm} alt="profile"/>
                                 </div>
                                 <div className="footer-post" >
                                 <IconContext.Provider value={{size: "30px"}} >
@@ -196,7 +195,7 @@ function PostList() {
                                 <span style={{margin: "0 -50px 0 0"}}>모두 보기</span>
                             </div>
                             <div className="user-suggestion" >
-                            {totalList.followList.map((follow, key) => (
+                            {totalList.followingList.map((follow, key) => (
                                     <div className="infos-suggestion" key={key}>
                                     {/* <img src={`https://github.com/${suggestion.login}.png`} alt="profile"/> */}
                                     <img className="image-user-story" src="https://github.com/peas.png" alt="profile" />
