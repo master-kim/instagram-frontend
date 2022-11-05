@@ -30,18 +30,31 @@ import commonAxios from '../../../commonAxios';
  * 2022.10.20    김요한    헤더 영역 추가
  * 2022.10.26    김요한    쿠키 추가
  * 2022.10.28    김요한    컴포넌트 나누어 놓은거 합치기 (백엔드 세번 호출 불필요 -> 1번으로 변경 위함)
+ * 2022.11.05    이강현    게시글 상세페이지 호출기능 추가
  * -------------------------------------------------------------
  */
 
 function PostList() {
 
     const [cookies, setCookie , removeCookie] = useCookies(['loginCookie']); // 쿠키 훅 
-    const navigate = useNavigate();
+    
+
 
     const userId = cookies.loginId; // 쿠키에서 id 를 꺼내기
 
     const [loading, setLoading] = useState(true);
     const [totalList, resultData] = useState([]);
+
+    const navigate = useNavigate();
+
+    //게시글의 '말풍선(댓글)모양 icon' 버튼 클릭시 페이지이동 및 클린된 게시글번호 파라미터 전달
+      const pageMove = (postId) => {
+          navigate('/post-detail-page', {
+            state: {
+                postId :postId
+            }
+          });
+      };
     
     /**
      * 2022.10.28.김요한.추가 - 프론트 , 백엔드 데이터 송/수신 내용
@@ -56,6 +69,9 @@ function PostList() {
      *       "followList" : {.... , .... } 
      *    }
      */
+
+
+
     useEffect(() => {
 
         if (userId === undefined) {
@@ -66,12 +82,20 @@ function PostList() {
 
             function callback(data) {
                 resultData(data);
+                console.log(data);
                 setLoading(false);
+
             }
         }
         return () => {
         };
-    }, []); 
+    },
+    
+    
+    
+    []); 
+
+    
     
     /* 페이지 호출 시 백엔드 호출 전 로딩 상태 표시 (계속 이상태면 백엔드 서버 꺼져있을 가능성 o) */
     if (loading) {
@@ -112,14 +136,16 @@ function PostList() {
                                         <FiMoreHorizontal />
                                 </header>
                                 <div className="img-post" >
-                                    <img src="https://github.com/maykbrito.png" alt="profile"/>
+                                    <img onClick={ () => {pageMove(post.postId);} } src="https://github.com/maykbrito.png" alt="profile"/>
                                 </div>
                                 <div className="footer-post" >
                                 <IconContext.Provider value={{size: "30px"}} >
                                     <section className="engagement-post" >
                                         <div className="icons-1" >
                                             <div className="icon"><IoMdHeartEmpty /></div>
-                                            <div className="icon"><BsChat /></div>
+                                            <div className="icon"><BsChat onClick={ () => {pageMove(post.postId);} } /></div>
+                                            
+            
                                             <div className="icon"><FiSend /></div>
                                         </div>
                                         <div className="icon"><BsBookmark /></div>
