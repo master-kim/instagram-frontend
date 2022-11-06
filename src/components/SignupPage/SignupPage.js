@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import commonAxios from "../../commonAxios";
 import * as commonUtils from "../../commonUtils";
@@ -26,7 +26,7 @@ function SignupPage(props) {
   const pageMove = (url) => {
     navigate(url);
   };
-
+const fileInput = useRef(null)
   const [inputs, setInputs] = useState({
     userId: "",
     userNick: "",
@@ -36,7 +36,8 @@ function SignupPage(props) {
     userEmail: "",
     userPhone: "",
   });
-
+  const fixedImage = "https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces"
+const [userImage, setUserImage] = useState(fixedImage)
   const {
     userId,
     userNick,
@@ -49,12 +50,31 @@ function SignupPage(props) {
 
   const onChange = (e) => {
     const { value, id } = e.target;
+    if(e.target.files[0]){
+      setUserImage(e.target.files[0])
+  }else{ //업로드 취소할 시
+      setUserImage("https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces")
+      return
+  }
+//화면에 프로필 사진 표시
+//FileReader 를 통해 비동기로 읽을 수 있음.
+  const reader = new FileReader();
+  reader.onload = () => {
+      if(reader.readyState === 2){
+          setUserImage(reader.result)
+      }
+  }
+  reader.readAsDataURL(e.target.files[0])
+
     setInputs({
       ...inputs,
+      userImage,
       [id]: value,
     });
+    
   };
 
+    
   // 모달창 노출 여부 state
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -110,12 +130,16 @@ function SignupPage(props) {
             <div className="signup-profile">
               <div className="signup-profile-image">
                 <img
-                  src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces"
-                  alt=""
+                  src={userImage}
+                  alt="userImage"
+                  onClick={()=>{fileInput.current.click()}}
                 />
               </div>
               <div className="signup-profile-user-settings">
-                <button className="btn signup-profile-edit-btn">사진 추가</button>
+                {/* input을 숨기고 label을 통해 깔끔하게 보이도록 만듦.  */}
+                <label className="btn signup-profile-edit-btn" for="userImage" >
+                  {userImage==fixedImage?`사진등록`:`취소`}</label>
+                <input style={{display:"none"}} className="btn signup-profile-edit-btn"  id="userImage" type="file" accept="image/*" name="user_img" onChange={onChange}/>
               </div>
             </div>
             <label className="input-label" htmlFor="userid">

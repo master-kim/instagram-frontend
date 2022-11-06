@@ -71,11 +71,12 @@
 .signup-profile-image img {
   border-radius: 50%;
   margin: 0 auto;
+  width: 15rem;
 }
 
 .signup-profile-user-settings {
   text-align: center;
-  color: rgb(0, 115, 255);
+  color: rgb(0,169,246);
   font-size: 14px;
 }
 .signup-profile-edit-btn {
