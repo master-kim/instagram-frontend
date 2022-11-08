@@ -70,6 +70,7 @@ function LoginPage(props) {
       if ( data[0].resultCd === 'SUCC' ) {
         setCookie('loginId', data[0].userId);      // 쿠키에 토큰 저장
         setCookie('loginNick', data[0].userNick);  // 쿠키에 토큰 저장
+        setCookie('userImg', data[0].userImg);  // 쿠키에 토큰 저장
         navigate('/mainpage')
       } else {;}
       setResultData(data);

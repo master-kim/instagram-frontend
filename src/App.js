@@ -6,6 +6,7 @@ import LoginPage from "./components/LoginPage/LoginPage";
 import PersonalPage from "./components/PersonalPage/PersonalPage";
 import "./css/common/global.css";
 import PostDetailPage from "./components/Post/PostDetailPage/PostDetailPage";
+import FollowSuggPage from "./components/Follow/FollowSugg/FollowSuggPage";
 
 /* 
  * 설명 : App.js
@@ -31,6 +32,7 @@ function App() {
         <Route exact path="/personal-page" element={<PersonalPage />} />
         <Route exact path="/mainpage" element={<PostPage />}/>
         <Route exact path="/post-detail-page" element={<PostDetailPage />}/>
+        <Route exact path="/follow-page" element={<FollowSuggPage />}/>
         {/* <ProtectedRoute exact path="/" component={Home} /> */}
         {/* <ProtectedRoute exact path="/my-profile" component={MyProfile} /> */}
         {/* <ProtectedRoute

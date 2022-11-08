@@ -91,7 +91,7 @@ function PersonalPage() {
     <div className="personalPage-container">
       <div className="profile">
         <div className="profile-image">
-          <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="" />
+          <img src={cookies.userImg.uuidFileNm} style={{ height: '180px' , width : '180px'}} alt="" />
         </div>
         <div className="profile-user-settings">
           <h1 className="profile-user-name">{userNick}</h1>

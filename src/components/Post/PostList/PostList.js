@@ -32,6 +32,7 @@ import commonAxios from '../../../commonAxios';
  * 2022.10.28    김요한    컴포넌트 나누어 놓은거 합치기 (백엔드 세번 호출 불필요 -> 1번으로 변경 위함)
  * 2022.11.05    이강현    게시글 상세페이지 호출기능 추가
  * 2022.11.05    김요한    팔로우 리스트 -> 팔로잉 리스트로 변경 , 게시글 파일 데이터 가져오기 추가
+ * 2022.11.07    김요한    팔로우맺기 추가
  * -------------------------------------------------------------
  */
 
@@ -47,13 +48,14 @@ function PostList() {
     const navigate = useNavigate();
 
     //게시글의 '말풍선(댓글)모양 icon' 버튼 클릭시 페이지이동 및 클린된 게시글번호 파라미터 전달
-      const pageMove = (postId) => {
-          navigate('/post-detail-page', {
-            state: {
-                postId :postId
-            }
-          });
-      };
+    const pageMove = (url , postId) => {
+
+        if (postId === null) {
+            navigate(url);
+        } else {
+            navigate(url, {state: {postId :postId}});
+        }
+    };
     
     /**
      * 2022.10.28.김요한.추가 - 프론트 , 백엔드 데이터 송/수신 내용
@@ -69,8 +71,6 @@ function PostList() {
      *    }
      */
 
-
-
     useEffect(() => {
 
         if (userId === undefined) {
@@ -81,20 +81,29 @@ function PostList() {
 
             function callback(data) {
                 resultData(data);
-                console.log(data);
                 setLoading(false);
-
             }
         }
         return () => {
         };
     },
-    
-    
-    
     []); 
 
-    
+    // 2022.11.07.김요한.추가 - 팔로우맺기
+    const doFollow = (followId) => {
+        const postData = {
+            userId : followId
+        }
+
+        commonAxios('/follow/doFollow' , postData , callback);
+
+        function callback(data) {
+            if (data.resultCd === "SUCC") {
+                window.location.reload();
+            } else {;}
+        }
+       
+    };
     
     /* 페이지 호출 시 백엔드 호출 전 로딩 상태 표시 (계속 이상태면 백엔드 서버 꺼져있을 가능성 o) */
     if (loading) {
@@ -112,11 +121,10 @@ function PostList() {
                         {/* 스토리 영역 */}
                         <div className="box" >
                             <div className="container" >
-                                {totalList.storyList.map((story) => (
+                                {totalList.storyList.map((story , index) => (
                                     <div className="user-elements" >
                                         <div>
-                                            {/* <img className="image-user-story" src="C:\dev\06.img" alt="profile" /> */}
-                                            <img className="image-user-story" src="https://github.com/peas.png" alt="profile" />
+                                            <img className="image-user-story" src={totalList.storyUserImgList[index].uuidFileNm} alt="profile" />
                                         </div>
                                         <span style={{textAlign: "center"}}>{story.userentity.userNick}</span>       
                                     </div> 
@@ -128,23 +136,25 @@ function PostList() {
                             <div className="box" style={{margin: "30px 0"}} >
                                 <header className="header-post" >
                                     <div className="infos-post" >
-                                        <img className="img-header-post" src="https://github.com/maykbrito.png" alt="profile"/>
+                                        {totalList.postUserImgList.map((postImgList) => {
+                                            if(post.userentity.userId === postImgList.commonId){
+                                                return <img className="img-header-post" src={postImgList.uuidFileNm} alt="profile"/>
+                                            } else {;}
+                                        })}
                                         {/* 2022.10.27.김요한.수정 - 게시글 ID가 아닌 Nick으로 표현 변경 (userId > userentity.userNick) */}
                                         <p>{post.userentity.userNick}</p>
                                     </div>
                                         <FiMoreHorizontal />
                                 </header>
                                 <div className="img-post" >
-                                    <img onClick={ () => {pageMove(post.postId);} } src={totalList.fileList[index].uuidFileNm} alt="profile"/>
+                                    <img onClick={ () => {pageMove('/post-detail-page' ,post.postId);} } src={totalList.postImgList[index].uuidFileNm} alt="profile"/>
                                 </div>
                                 <div className="footer-post" >
                                 <IconContext.Provider value={{size: "30px"}} >
                                     <section className="engagement-post" >
                                         <div className="icons-1" >
                                             <div className="icon"><IoMdHeartEmpty /></div>
-                                            <div className="icon"><BsChat onClick={ () => {pageMove(post.postId);} } /></div>
-                                            
-            
+                                            <div className="icon"><BsChat onClick={ () => {pageMove( '/post-detail-page' , post.postId);} } /></div>
                                             <div className="icon"><FiSend /></div>
                                         </div>
                                         <div className="icon"><BsBookmark /></div>
@@ -181,29 +191,28 @@ function PostList() {
                         <div className="suggestionBox" >
                         <div className="container-suggestion">
                             <div className="header-suggestion" >
-                                <img src={`https://github.com/gabrieldiasss.png`} alt="profile"/>
+                                <img src={cookies.userImg.uuidFileNm} alt="profile"/>
                                 <div className="user-infos-suggestion" >
                                     <div className="infos" >
                                         <span>{cookies.loginId}</span>
                                         <p>{cookies.loginNick}</p>
                                     </div>
-                                    <button className="switch" style={{margin: "0 -50px 0 0"}}>계정전환</button>
                                 </div>
                             </div>
                             <div className="header-main-suggestion" >
                                 <p>회원님을 위한 추천</p>
-                                <span style={{margin: "0 -50px 0 0"}}>모두 보기</span>
+                                <span style={{margin: "0 -50px 0 0"}} onClick={ () => {pageMove( '/follow-page' , null);} } >모두 보기</span>
                             </div>
                             <div className="user-suggestion" >
-                            {totalList.followingList.map((follow, key) => (
+                            {totalList.followSuggList.map((followInfo, key) => (
                                     <div className="infos-suggestion" key={key}>
                                     {/* <img src={`https://github.com/${suggestion.login}.png`} alt="profile"/> */}
-                                    <img className="image-user-story" src="https://github.com/peas.png" alt="profile" />
+                                    <img className="image-user-story" src={totalList.followSuggImgList[key].uuidFileNm} alt="profile" />
                                     <div className="info-suggestion" >
-                                        <span>{follow.userId}</span>
-                                        <p>{follow.userNick}</p>
+                                        <span>{followInfo.userId}</span>
+                                        <p>{followInfo.userNick}</p>
                                     </div>
-                                    <button className='follow' style={{margin: "0 -50px 0 0"}} >팔로우</button>
+                                    <button className='follow' style={{margin: "0 -50px 0 0"}} onClick={()=>{doFollow(followInfo.userId);} }>팔로우</button>
                                 </div>
                             ))}
                             </div>
