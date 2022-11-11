@@ -5,6 +5,7 @@ import {
   IoMdHeartEmpty,
   IoIosArrowBack,
   IoIosArrowForward,
+  IoIosClose
 } from "react-icons/io";
 import { BsChat, BsEmojiSmile, BsBookmark } from "react-icons/bs";
 import { IconContext } from "react-icons/lib";
@@ -119,8 +120,8 @@ export default function PostDetailPage() {
               </IconContext.Provider>
               <div className="post-detail-legend">
                   <p>
-                    <span>{postList.postInfo.userId}</span>
-                    {postList.postInfo.postContent}
+                     <span>{postList.postInfo.userId}</span> 
+                     {postList.postInfo.postContent} 
                   </p>
                 </div>
                 <div className="post-detail-time-post">
@@ -142,6 +143,9 @@ export default function PostDetailPage() {
 
           <div className="icon-arrow">
             <IoIosArrowForward />
+          </div>
+          <div class="close">
+            <IoIosClose/>
           </div>
         </div>
       </div>
