@@ -18,6 +18,7 @@ import Modal from "../Common/Modal";
  * 2022.10.20    김영일    input 사항들 추가
  * 2022.10.24    김요한    회원가입 양식 유효성 검증 및 데이터 처리 진행완료
  * 2022.11.01    김요한    모달 팝업 추가
+ * 2022.11.07    김영일    사진등록 추가  s
  * -------------------------------------------------------------
  */
 
@@ -26,55 +27,50 @@ function SignupPage(props) {
   const pageMove = (url) => {
     navigate(url);
   };
-const fileInput = useRef(null)
-  const [inputs, setInputs] = useState({
-    userId: "",
-    userNick: "",
-    userName: "",
-    userPwd: "",
-    userPwdChk: "",
-    userEmail: "",
-    userPhone: "",
-  });
-  const fixedImage = "https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces"
-const [userImage, setUserImage] = useState(fixedImage)
-  const {
+  const fileInput = useRef(null);
+
+  const fixedImage =
+    "https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces";
+  const [userImage, setUserImage] = useState(fixedImage);
+  const [userId, setUserId] = useState("");
+  const [userNick, setUserNick] = useState("");
+  const [userName, setUserName] = useState("");
+  const [userPwd, setUserPwd] = useState("");
+  const [userPwdChk, setUserPwdChk] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userPhone, setUserPhone] = useState("");
+
+  const userProfileData = {
+    userImage,
     userId,
-    userNick,
     userName,
+    userNick,
     userPwd,
     userPwdChk,
     userEmail,
     userPhone,
-  } = inputs;
-
-  const onChange = (e) => {
-    const { value, id } = e.target;
-    if(e.target.files[0]){
-      setUserImage(e.target.files[0])
-  }else{ //업로드 취소할 시
-      setUserImage("https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces")
-      return
   }
-//화면에 프로필 사진 표시
-//FileReader 를 통해 비동기로 읽을 수 있음.
-  const reader = new FileReader();
-  reader.onload = () => {
-      if(reader.readyState === 2){
-          setUserImage(reader.result)
+  const onUserImageChange = (e) => {
+    if (e.target.files[0]) {
+      setUserImage(e.target.files[0]);
+    } else {
+      //업로드 취소할 시
+      setUserImage(
+        "https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces"
+      );
+    }
+    //화면에 프로필 사진 표시
+    //FileReader 를 통해 비동기로 읽을 수 있음.
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setUserImage(reader.result);
       }
-  }
-  reader.readAsDataURL(e.target.files[0])
-
-    setInputs({
-      ...inputs,
-      userImage,
-      [id]: value,
-    });
-    
+    };
+    reader.readAsDataURL(e.target.files[0]);
   };
+  
 
-    
   // 모달창 노출 여부 state
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -92,11 +88,12 @@ const [userImage, setUserImage] = useState(fixedImage)
     const result = commonUtils.isEqualCheck(userPwd, userPwdChk);
 
     if (result === true) {
-      await commonAxios("/user/userRegister", inputs, callback);
+      await commonAxios("/user/userRegister", userProfileData, callback);
 
       function callback(data) {
         if (data[0].resultCd === "SUCC") {
           navigate("/login");
+          console.log(data)
         } else {
         }
         setResultData(data);
@@ -132,14 +129,29 @@ const [userImage, setUserImage] = useState(fixedImage)
                 <img
                   src={userImage}
                   alt="userImage"
-                  onClick={()=>{fileInput.current.click()}}
+                  onClick={() => {
+                    fileInput.current.click();
+                  }}
                 />
               </div>
               <div className="signup-profile-user-settings">
                 {/* input을 숨기고 label을 통해 깔끔하게 보이도록 만듦.  */}
-                <label className="btn signup-profile-edit-btn" for="userImage" >
-                  {userImage==fixedImage?`사진등록`:`취소`}</label>
-                <input style={{display:"none"}} className="btn signup-profile-edit-btn"  id="userImage" type="file" accept="image/*" name="user_img" onChange={onChange}/>
+                <label
+                  className="btn signup-profile-edit-btn"
+                  htmlFor="userImage"
+                >
+                  {userImage == fixedImage ? `사진등록` : `취소`}
+                </label>
+                <input
+                  style={{ display: "none" }}
+                  className="btn signup-profile-edit-btn"
+                  id="userImage"
+                  type="file"
+                  accept="image/*"
+                  name="user_img"
+                  onChange={onUserImageChange}
+                  ref={fileInput}
+                />
               </div>
             </div>
             <label className="input-label" htmlFor="userid">
@@ -149,7 +161,7 @@ const [userImage, setUserImage] = useState(fixedImage)
               type="text"
               id="userId"
               className="userid-input-field"
-              onChange={onChange}
+              onChange={(e)=>setUserId(e.target.value)}
               value={userId}
               placeholder="아이디를 입력해주세요."
             />
@@ -162,7 +174,7 @@ const [userImage, setUserImage] = useState(fixedImage)
               type="text"
               id="userName"
               className="username-input-field"
-              onChange={onChange}
+              onChange={(e) =>setUserName(e.target.value)}
               value={userName}
               placeholder="이름을 입력해주세요."
             />
@@ -175,7 +187,7 @@ const [userImage, setUserImage] = useState(fixedImage)
               type="text"
               id="userNick"
               className="usernickname-input-field"
-              onChange={onChange}
+              onChange={(e)=>setUserNick(e.target.value)}
               value={userNick}
               placeholder="닉네임을 입력해주세요."
             />
@@ -188,7 +200,7 @@ const [userImage, setUserImage] = useState(fixedImage)
               type="password"
               id="userPwd"
               className="password-input-field"
-              onChange={onChange}
+              onChange={(e)=>setUserPwd(e.target.value)}
               value={userPwd}
               placeholder="비밀번호를 입력해주세요."
             />
@@ -201,7 +213,7 @@ const [userImage, setUserImage] = useState(fixedImage)
               type="password"
               id="userPwdChk"
               className="password-input-field"
-              onChange={onChange}
+              onChange={(e) =>setUserPwdChk(e.target.value)}
               value={userPwdChk}
               placeholder="비밀번호를 입력해주세요."
             />
@@ -213,7 +225,7 @@ const [userImage, setUserImage] = useState(fixedImage)
                 type="email"
                 id="userEmail"
                 className="email-input-field"
-                onChange={onChange}
+                onChange={(e)=>setUserEmail(e.target.value)}
                 value={userEmail}
                 placeholder="이메일을 입력해주세요."
               />
@@ -227,7 +239,7 @@ const [userImage, setUserImage] = useState(fixedImage)
               type="text"
               id="userPhone"
               className="phone-input-field"
-              onChange={onChange}
+              onChange={(e)=>setUserPhone(e.target.value)}
               value={userPhone}
               placeholder="핸드폰 번호를 입력해주세요."
             />
