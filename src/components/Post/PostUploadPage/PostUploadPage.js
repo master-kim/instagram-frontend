@@ -117,7 +117,7 @@ export default function PostUploadPage() {
   }
 
   {
-    /* 사진 업데이트 직전 페이지 */
+    /* 사진 업데이트 직전 페이지! */
   }
   function uploadedPage() {
     return (
