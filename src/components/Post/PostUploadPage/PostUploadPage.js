@@ -10,7 +10,7 @@ import {
 } from "react-icons/io";
 import { BsChat, BsEmojiSmile, BsBookmark } from "react-icons/bs";
 import { IconContext } from "react-icons/lib";
-import commonAxios from "../../../commonAxios";
+import * as commonAxios  from "../../../commonAxios";
 import "./PostUploadPage.css";
 
 /*
@@ -43,7 +43,7 @@ export default function PostUploadPage() {
 
     // const inputs = {postId};
 
-    // commonAxios(`/post/postDetail`, inputs, callback);
+    // commonAxios.commonAxios(`/post/postDetail`, inputs, callback);
 
     // function callback(data) {
     //   resultData(data);

@@ -4,7 +4,7 @@ import "./LoginPage.css";
 
 import React, { useState , useEffect} from "react";
 import { useNavigate } from "react-router-dom";
-import commonAxios from '../../commonAxios';
+import * as commonAxios from '../../commonAxios';
 import { useCookies } from 'react-cookie'; // useCookies import
 
 import Modal from '../Common/Modal';
@@ -64,7 +64,7 @@ function LoginPage(props) {
 
     event.preventDefault();
 
-    await commonAxios('/user/userLogin' , inputs , callback);
+    await commonAxios.commonAxios('/user/userLogin' , inputs , callback);
 
     function callback(data) {
       if ( data[0].resultCd === 'SUCC' ) {

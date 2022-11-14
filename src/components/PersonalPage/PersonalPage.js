@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import React, { useEffect } from 'react';
 
-import commonAxios from '../../commonAxios';
+import * as commonAxios from '../../commonAxios';
 
 import "./PersonalPage.css";
 
@@ -71,7 +71,7 @@ function PersonalPage() {
           alert('세션이 만료되었습니다.')
           navigate('/login')
       } else {
-        commonAxios('/user/personalPage' , {} , callback);
+        commonAxios.commonAxios('/user/personalPage' , {} , callback);
         function callback(data) {
           resultData(data);
           setLoading(false);

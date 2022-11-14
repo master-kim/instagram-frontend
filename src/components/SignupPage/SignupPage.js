@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import commonAxios from "../../commonAxios";
+import * as commonAxios from "../../commonAxios";
 import * as commonUtils from "../../commonUtils";
 
 import insta_logo from "../../images/insta_logo.png";
@@ -18,7 +18,8 @@ import Modal from "../Common/Modal";
  * 2022.10.20    김영일    input 사항들 추가
  * 2022.10.24    김요한    회원가입 양식 유효성 검증 및 데이터 처리 진행완료
  * 2022.11.01    김요한    모달 팝업 추가
- * 2022.11.07    김영일    사진등록 추가  s
+ * 2022.11.07    김영일    사진등록 추가
+ * 2022.11.14    김요한    이미지 업로드 추가
  * -------------------------------------------------------------
  */
 
@@ -32,6 +33,7 @@ function SignupPage(props) {
   const fixedImage =
     "https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces";
   const [userImage, setUserImage] = useState(fixedImage);
+  const [dataImg, setDataImage] = useState();
   const [userId, setUserId] = useState("");
   const [userNick, setUserNick] = useState("");
   const [userName, setUserName] = useState("");
@@ -52,23 +54,22 @@ function SignupPage(props) {
   }
   const onUserImageChange = (e) => {
     if (e.target.files[0]) {
-      setUserImage(e.target.files[0]);
+      // 2022.11.12.김요한.추가 - userImage 는 화면에 바뀌는 데이터 형식(String) , dataImg는 실질적인 데이터 전송 형식 (File) // 합칠 수 있으면 합치길 원함!
+      setUserImage(()=>e.target.files[0]);
+      setDataImage(()=>e.target.files[0]);
     } else {
       //업로드 취소할 시
-      setUserImage(
-        "https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces"
-      );
+      setUserImage("https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces");
     }
-    //화면에 프로필 사진 표시
     //FileReader 를 통해 비동기로 읽을 수 있음.
     const reader = new FileReader();
     reader.onload = () => {
       if (reader.readyState === 2) {
         setUserImage(reader.result);
-      }
+      } else{;}
     };
     reader.readAsDataURL(e.target.files[0]);
-  };
+};
   
 
   // 모달창 노출 여부 state
@@ -88,8 +89,15 @@ function SignupPage(props) {
     const result = commonUtils.isEqualCheck(userPwd, userPwdChk);
 
     if (result === true) {
-      await commonAxios("/user/userRegister", userProfileData, callback);
 
+      // 2022.11.12.김요한.추가 - FormData 선언 및 inputData => 이 부분은 헤더를 application/json 로 데이터 변경
+      const formData = new FormData()
+      const inputs = new Blob([JSON.stringify(userProfileData)], {type: "application/json"}) 
+      formData.append('fileInfo',dataImg);
+      formData.append('userInfo',inputs);
+
+      await commonAxios.commonMultiPart('/user/userRegister' , formData , callback);
+      
       function callback(data) {
         if (data[0].resultCd === "SUCC") {
           navigate("/login");

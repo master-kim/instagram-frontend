@@ -8,7 +8,7 @@ import {FiArrowRightCircle} from 'react-icons/fi'
 import { useNavigate } from "react-router-dom";
 
 import { IconContext } from 'react-icons'
-import commonAxios from '../../commonAxios';
+import * as commonAxios from '../../commonAxios';
 import { useCookies } from 'react-cookie';
 import './Header.css'
 
@@ -36,7 +36,7 @@ function Header() {
 
     const logout = async () => {
 
-        await commonAxios('/user/userLogout' , {} , callback);
+        await commonAxios.commonAxios('/user/userLogout' , {} , callback);
     
         function callback(data) {
             if ( data.resultCd === 'SUCC' ) {

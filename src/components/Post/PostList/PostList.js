@@ -6,6 +6,7 @@ import './PostList.css'
  */
 import { FiMoreHorizontal, FiSend } from 'react-icons/fi'
 import { IoMdHeartEmpty} from 'react-icons/io'
+import { IoMdHeart} from 'react-icons/io'
 import { BsChat, BsEmojiSmile, BsBookmark} from 'react-icons/bs'
 import { IconContext } from 'react-icons/lib'
 
@@ -20,7 +21,7 @@ import { SuggestionList } from '../SuggestionList/SuggestionList' */
 import { useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import React, { useState , useEffect } from 'react';
-import commonAxios from '../../../commonAxios';
+import  * as commonAxios from "../../../commonAxios";
 /* 
  * 설명 : PostList.js
  * ------------------------------------------------------------- 
@@ -33,6 +34,7 @@ import commonAxios from '../../../commonAxios';
  * 2022.11.05    이강현    게시글 상세페이지 호출기능 추가
  * 2022.11.05    김요한    팔로우 리스트 -> 팔로잉 리스트로 변경 , 게시글 파일 데이터 가져오기 추가
  * 2022.11.07    김요한    팔로우맺기 추가
+ * 2022.11.14    김요한    좋아요 기능추가
  * -------------------------------------------------------------
  */
 
@@ -77,7 +79,7 @@ function PostList() {
             alert('세션이 만료되었습니다.')
             navigate('/login')
         } else {
-            commonAxios('/post/postList' , {} , callback);
+            commonAxios.commonAxios('/post/postList' , {} , callback);
 
             function callback(data) {
                 resultData(data);
@@ -95,7 +97,7 @@ function PostList() {
             userId : followId
         }
 
-        commonAxios('/follow/doFollow' , postData , callback);
+        commonAxios.commonAxios('/follow/doFollow' , postData , callback);
 
         function callback(data) {
             if (data.resultCd === "SUCC") {
@@ -104,7 +106,47 @@ function PostList() {
         }
        
     };
+
+    // 2022.11.14.김요한.추가 - 좋아요
+    const doLike = (postId) => {
+        const postData = {
+            postId : postId
+        }
+
+        commonAxios.commonAxios('/post/doLike' , postData , callback);
+
+        function callback(data) {
+            if (data.resultCd === "SUCC") {
+                window.location.reload();
+            } else {;}
+        }
+    };
     
+    // 2022.11.14.김요한.추가 - 좋아요 렌더링
+    const postLikeRendering = (postList , postLikeList) => {
+        const result = [];
+        var setCnt = 0;
+        for (let likeIdx=0; likeIdx < postLikeList.length; likeIdx++) {
+            if (postLikeList.length > 0) {
+                if(cookies.loginId === postLikeList[likeIdx].userId && postLikeList[likeIdx].postId === postList.postId){
+                    setCnt = 1;
+                    break;
+                } else {
+                    setCnt = 0;
+                }
+            } else {
+                setCnt = 0;
+                break;
+            }
+        }
+        if (setCnt > 0) {
+            result.push(<div className="icon"><IoMdHeart onClick={() => {doLike(postList.postId);}} /></div>);
+        } else {
+            result.push(<div className="icon"><IoMdHeartEmpty onClick={() => {doLike(postList.postId);}} /></div>);
+        }
+        return result;
+    };
+
     /* 페이지 호출 시 백엔드 호출 전 로딩 상태 표시 (계속 이상태면 백엔드 서버 꺼져있을 가능성 o) */
     if (loading) {
         return <div className="box" style={{margin: "30px 0"}} > Loading... </div>;
@@ -153,7 +195,7 @@ function PostList() {
                                 <IconContext.Provider value={{size: "30px"}} >
                                     <section className="engagement-post" >
                                         <div className="icons-1" >
-                                            <div className="icon"><IoMdHeartEmpty /></div>
+                                            {postLikeRendering(post , totalList.postLikeList[index])}
                                             <div className="icon"><BsChat onClick={ () => {pageMove( '/post-detail-page' , post.postId);} } /></div>
                                             <div className="icon"><FiSend /></div>
                                         </div>
@@ -161,11 +203,14 @@ function PostList() {
                                     </section>
                                 </IconContext.Provider>
                                 <section className="like" >
-                                    <span>61 curtidas</span>
+                                    <span>좋아요 {totalList.postLikeCnt[index]}개</span>
                                 </section>
                                 <div className="legend" >
                                     <p>
-                                        <span>{post.userentity.userNick}</span> {post.postContent}
+                                        {post.userentity.userNick}
+                                        <span>
+                                            {post.postContent}
+                                        </span>
                                     </p>
                                 </div>
                                 <div className="time-post" >

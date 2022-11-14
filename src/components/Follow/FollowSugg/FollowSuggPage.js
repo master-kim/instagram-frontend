@@ -7,7 +7,7 @@ import './FollowSuggPage.css'
 import { useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import React, { useState , useEffect } from 'react';
-import commonAxios from '../../../commonAxios';
+import * as commonAxios from '../../../commonAxios';
 /* 
  * 설명 : FollowPage.js
  * ------------------------------------------------------------- 
@@ -46,7 +46,7 @@ function FollowSuggPage() {
             alert('세션이 만료되었습니다.')
             navigate('/login')
         } else {
-            commonAxios('/follow/followSuggList' , {} , callback);
+            commonAxios.commonAxios('/follow/followSuggList' , {} , callback);
 
             function callback(data) {
                 resultData(data);
@@ -63,7 +63,7 @@ function FollowSuggPage() {
             userId : followId
         }
 
-        commonAxios('/follow/doFollow' , postData , callback);
+        commonAxios.commonAxios('/follow/doFollow' , postData , callback);
 
         function callback(data) {
             if (data.resultCd === "SUCC") {
