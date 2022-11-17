@@ -7,6 +7,7 @@ import PersonalPage from "./components/PersonalPage/PersonalPage";
 import "./css/common/global.css";
 import PostDetailPage from "./components/Post/PostDetailPage/PostDetailPage";
 import FollowSuggPage from "./components/Follow/FollowSugg/FollowSuggPage";
+import PostUploadPage from "./components/Post/PostUploadPage/PostUploadPage";
 
 /* 
  * 설명 : App.js
@@ -15,7 +16,8 @@ import FollowSuggPage from "./components/Follow/FollowSugg/FollowSuggPage";
  * ------------------------------------------------------------- 
  * 2022.10.11    김요한    최초작성
  * 2022.10.14    김영일    메인페이지 , 로그인 페이지 , 개인페이지 추가
- * 2022.10.28    김요한    메인페이지 (통합) : PostPage [layout : story , suggestion , post] 을 -> postList.js 한개로 통합 
+ * 2022.10.28    김요한    메인페이지 (통합) : PostPage [layout : story , suggestion , post] 을 -> postList.js 한개로 통합
+ * 2022.11.17    김영일    포스트 업로드 페이지 추가
  * -------------------------------------------------------------
 */
 
@@ -33,6 +35,7 @@ function App() {
         <Route exact path="/mainpage" element={<PostPage />}/>
         <Route exact path="/post-detail-page" element={<PostDetailPage />}/>
         <Route exact path="/follow-page" element={<FollowSuggPage />}/>
+        <Route exact path="/post-upload-page" element={<PostUploadPage />}/>
         {/* <ProtectedRoute exact path="/" component={Home} /> */}
         {/* <ProtectedRoute exact path="/my-profile" component={MyProfile} /> */}
         {/* <ProtectedRoute
