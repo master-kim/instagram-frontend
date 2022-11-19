@@ -24,6 +24,12 @@
     cursor: pointer;
 }
 
+.header .container .span-user-nick {
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
 .input-fake {
     background: var(--background-main);
     border-radius: 3px;

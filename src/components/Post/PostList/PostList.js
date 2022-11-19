@@ -38,7 +38,7 @@ import  * as commonAxios from "../../../commonAxios";
  * -------------------------------------------------------------
  */
 
-function PostList() {
+function PostList(props) {
 
     const [cookies, setCookie , removeCookie] = useCookies(['loginCookie']); // 쿠키 훅 
 
@@ -147,6 +147,46 @@ function PostList() {
         return result;
     };
 
+    // 댓글달기
+    const [inputData, setinputData] = useState();
+    const onChange = (e) => {
+        const { value, id } = e.target;  
+        setinputData({
+          ...inputData,                     
+          [id]: value                    
+        });
+    };
+    const doComment = (postId) => {
+        const postData = {
+            postId      : postId ,
+            postComment : inputData.postComment
+        }
+
+        commonAxios.commonAxios('/post/doComment' , postData , callback);
+
+        function callback(data) {
+            if (data.resultCd === "SUCC") {
+                window.location.reload();
+            } else {;}
+        }
+    };
+    
+    // 2022.11.14.김요한.추가 - 댓글 렌더링 사용 X
+    const postCommentRendering = (postList , postCommentList) => {
+        const result = [];
+        for (let commentIdx=0; commentIdx < postCommentList.length; commentIdx++) {
+            if (postCommentList.length > 0) {
+                if(postCommentList[commentIdx].postId === postList.postId){
+                    result.push(<span>{postCommentList.content}</span>);
+                } else {;}
+            } else {
+                result.push(<span></span>);
+                break;
+            }
+        }
+        return result;
+    };
+
     /* 페이지 호출 시 백엔드 호출 전 로딩 상태 표시 (계속 이상태면 백엔드 서버 꺼져있을 가능성 o) */
     if (loading) {
         return <div className="box" style={{margin: "30px 0"}} > Loading... </div>;
@@ -165,10 +205,10 @@ function PostList() {
                             <div className="container" >
                                 {totalList.storyList.map((story , index) => (
                                     <div className="user-elements" >
-                                        <div>
+                                        <div style={{margin : "0 0 5px 0"}}>
                                             <img className="image-user-story" src={totalList.storyUserImgList[index].uuidFileNm} alt="profile" />
                                         </div>
-                                        <span style={{textAlign: "center"}}>{story.userentity.userNick}</span>       
+                                        <span style={{textAlign: "center" , margin : "0 12px"}}>{story.userentity.userNick}</span>
                                     </div> 
                                 ))}
                             </div>
@@ -213,6 +253,13 @@ function PostList() {
                                         </span>
                                     </p>
                                 </div>
+                                <div style={{margin: "6px 0 6px"}}>
+                                    {totalList.postCommentList[index].map((commentList) => {
+                                        if(post.postId === commentList.postId){
+                                            return <p className="commentP">&bull; {commentList.userentity.userNick}<span className="commentSpan">{commentList.content}</span></p>
+                                        } else {;}
+                                    })}
+                                </div>
                                 <div className="time-post" >
                                     <time>{post.createDt}</time>
                                 </div>
@@ -223,9 +270,9 @@ function PostList() {
                                                 <BsEmojiSmile />
                                             </div>
                                         </IconContext.Provider>
-                                        <input placeholder="댓글달기..." />
+                                        <input id="postComment" type="text" placeholder="댓글달기..." onChange={onChange} />
                                     </div>
-                                    <button>게시</button>
+                                    <button onClick={()=>{doComment(post.postId);} }>게시</button>
                                 </div>
                                 </div>
                             </div>
@@ -236,10 +283,10 @@ function PostList() {
                         <div className="suggestionBox" >
                         <div className="container-suggestion">
                             <div className="header-suggestion" >
-                                <img src={cookies.userImg.uuidFileNm} alt="profile"/>
+                                <img onClick={() => pageMove('/personal-page')} src={cookies.userImg.uuidFileNm} alt="profile"/>
                                 <div className="user-infos-suggestion" >
                                     <div className="infos" >
-                                        <span>{cookies.loginId}</span>
+                                        <span onClick={() => pageMove('/personal-page')} >{cookies.loginId}</span>
                                         <p>{cookies.loginNick}</p>
                                     </div>
                                 </div>
