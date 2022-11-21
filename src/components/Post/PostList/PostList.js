@@ -35,6 +35,8 @@ import  * as commonAxios from "../../../commonAxios";
  * 2022.11.05    김요한    팔로우 리스트 -> 팔로잉 리스트로 변경 , 게시글 파일 데이터 가져오기 추가
  * 2022.11.07    김요한    팔로우맺기 추가
  * 2022.11.14    김요한    좋아요 기능추가
+ * 2022.11.19    김요한    댓글 기능 추가
+ * 2022.11.21    김요한    댓글 삭제 추가 (수정은 진행중)
  * -------------------------------------------------------------
  */
 
@@ -171,22 +173,72 @@ function PostList(props) {
         }
     };
     
-    // 2022.11.14.김요한.추가 - 댓글 렌더링 사용 X
-    const postCommentRendering = (postList , postCommentList) => {
+    // 댓글 영역 렌더링
+    // 2022.11.24.김요한.추가 - 좋아요 렌더링
+    const detailCommentRendering = (commentList , postId) => {
         const result = [];
-        for (let commentIdx=0; commentIdx < postCommentList.length; commentIdx++) {
-            if (postCommentList.length > 0) {
-                if(postCommentList[commentIdx].postId === postList.postId){
-                    result.push(<span>{postCommentList.content}</span>);
-                } else {;}
-            } else {
-                result.push(<span></span>);
-                break;
-            }
+        if (cookies.loginId === commentList.userId) {
+            result.push(
+            <div className="post-detail-comment">
+                <div className="post-detail-fake-comment">
+                <p className="commentP">{commentList.userentity.userNick}<span id={"comment_" + commentList.commentId} className="commentSpan">{commentList.content}</span></p>
+                </div>
+                {/* <button onClick={()=>{CommentUpdate(commentList.commentId , postId, "U");} } style={{margin: "0px 10px 0px"}}>수정</button> */}
+                <button onClick={()=>{CommentUpdate(commentList.commentId ,postId , "D");} } style={{margin: "0px 10px 0px"}}>삭제</button>
+                <button onClick={()=>{doCommentLike(commentList.commentId, postId);} }><IoMdHeartEmpty/></button>
+            </div> 
+            );
+        } else {
+            result.push(
+            <div className="post-detail-comment">
+                <div className="post-detail-fake-comment">
+                <p className="commentP">{commentList.userentity.userNick}<span className="commentSpan">{commentList.content}</span></p>
+                </div>
+                <button onClick={()=>{doCommentLike(commentList.commentId , postId);} }><IoMdHeartEmpty/></button>
+            </div> 
+            );
         }
         return result;
     };
 
+    // 2022.11.21.김요한.추가 - 댓글 수정 ,삭제 [수정은 수정 폼 만들어서 넣어야하므로 추후 다시 만들 예정]
+    const CommentUpdate = (commentId , postId, commentType) => {
+    
+    const commentData = {
+        commentId      : commentId ,
+        postId         : postId ,
+        commentType    : "",
+        commentContent : ""
+    }
+
+    if (commentType === "U") {
+        commentData.commentType = "U";
+    } else {
+        commentData.commentType = "D";
+    }
+
+    commonAxios.commonAxios('/post/updateComment' , commentData , callback);
+
+    function callback(data) {
+        if (data.resultCd === "SUCC") {
+            window.location.reload();
+        } else {;}
+    }
+    };
+
+    // 2022.11.21.김요한.추가 - 댓글 좋아요 추후 개발 예정
+    const doCommentLike = (commentId) => {
+        const commentData = {
+        commentId : commentId , 
+        userId    : cookies.loginId
+        }
+        /* commonAxios.commonAxios('/post/doCommentLike' , commentData , callback);
+        function callback(data) {
+            if (data.resultCd === "SUCC") {
+                window.location.reload();
+            } else {;}
+        } */
+    };
     /* 페이지 호출 시 백엔드 호출 전 로딩 상태 표시 (계속 이상태면 백엔드 서버 꺼져있을 가능성 o) */
     if (loading) {
         return <div className="box" style={{margin: "30px 0"}} > Loading... </div>;
@@ -256,7 +308,7 @@ function PostList(props) {
                                 <div style={{margin: "6px 0 6px"}}>
                                     {totalList.postCommentList[index].map((commentList) => {
                                         if(post.postId === commentList.postId){
-                                            return <p className="commentP">&bull; {commentList.userentity.userNick}<span className="commentSpan">{commentList.content}</span></p>
+                                            {return detailCommentRendering(commentList , post.postId)}
                                         } else {;}
                                     })}
                                 </div>

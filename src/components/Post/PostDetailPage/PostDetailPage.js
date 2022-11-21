@@ -28,6 +28,7 @@ import "./PostDetailPage.css";
  * 2022.11.19    김요한    게시글 디테일 페이지 좋아요 기능 추가
  * 2022.11.19    김요한    게시글 디테일 페이지 댓글 기능 추가
  * 2022.11.19    김요한    디테일 페이지 X누를경우 메인페이지로 이동 추가 (임시 방편) 추후 팝업창으로 변경 필요
+ * 2022.11.19    김요한    댓글 삭제 (수정 미완성) 추가
  * -------------------------------------------------------------
  */
 
@@ -109,6 +110,73 @@ export default function PostDetailPage() {
       }
   };
 
+  // 댓글 영역 렌더링
+  // 2022.11.24.김요한.추가 - 좋아요 렌더링
+  const detailCommentRendering = (commentList , postId) => {
+      const result = [];
+      if (cookies.loginId === commentList.userId) {
+          result.push(
+            <div className="post-detail-comment">
+              <div className="post-detail-fake-comment">
+                <p className="commentP">{commentList.userentity.userNick}<span id={"comment_" + commentList.commentId} className="commentSpan">{commentList.content}</span></p>
+              </div>
+              {/* <button onClick={()=>{CommentUpdate(commentList.commentId , postId , "U");} } style={{margin: "0px 10px 0px"}}>수정</button> */}
+              <button onClick={()=>{CommentUpdate(commentList.commentId , postId ,"D");} } style={{margin: "0px 10px 0px"}}>삭제</button>
+              <button onClick={()=>{doCommentLike(commentList.commentId , postId);} }><IoMdHeartEmpty/></button>
+            </div> 
+            );
+      } else {
+          result.push(
+            <div className="post-detail-comment">
+              <div className="post-detail-fake-comment">
+                <p className="commentP">{commentList.userentity.userNick}<span className="commentSpan">{commentList.content}</span></p>
+              </div>
+              <button onClick={()=>{doCommentLike(commentList.commentId , postId);} }><IoMdHeartEmpty/></button>
+            </div> 
+          );
+      }
+      return result;
+  };
+  
+  // 2022.11.21.김요한.추가 - 댓글 수정 ,삭제 [수정은 수정 폼 만들어서 넣어야하므로 추후 다시 만들 예정]
+  const CommentUpdate = (commentId , postId, commentType) => {
+    
+    const commentData = {
+        commentId      : commentId ,
+        postId         : postId ,
+        commentType    : "",
+        commentContent : ""
+    }
+
+    if (commentType === "U") {
+      commentData.commentType = "U";
+    } else {
+      commentData.commentType = "D";
+    }
+
+    commonAxios.commonAxios('/post/updateComment' , commentData , callback);
+
+    function callback(data) {
+        if (data.resultCd === "SUCC") {
+            window.location.reload();
+        } else {;}
+    }
+  };
+  
+  // 2022.11.21.김요한.추가 - 댓글 좋아요 추후 개발 예정
+  const doCommentLike = (commentId , postId) => {
+      const commentData = {
+        commentId : commentId , 
+        userId    : cookies.loginId
+      }
+      /* commonAxios.commonAxios('/post/doCommentLike' , commentData , callback);
+      function callback(data) {
+          if (data.resultCd === "SUCC") {
+              window.location.reload();
+          } else {;}
+      } */
+  };
+
   // 댓글달기
   const onChange = (e) => {
     const { value, id } = e.target;  
@@ -117,7 +185,7 @@ export default function PostDetailPage() {
       [id]: value                    
     });
   };
-   
+  
   const doComment = (postId) => {
       const postData = {
           postId      : postId ,
@@ -132,7 +200,7 @@ export default function PostDetailPage() {
           } else {;}
       }
   };
-
+  
   if (postList.length === 0) {
   } else {
     return (
@@ -163,9 +231,15 @@ export default function PostDetailPage() {
                 </div>
               </div>
               <div style={{margin: "6px 20px 6px"}}>
-              <span>댓글영역</span>
                   {postList.postCommentList.map((commentList) => {
-                    return <p className="commentP">&bull; {commentList.userentity.userNick}<span className="commentSpan">{commentList.content}</span></p>
+                   {return detailCommentRendering(commentList , postList.postId)}
+                    /* return <div className="post-detail-comment">
+                              <div className="post-detail-fake-comment">
+                                <p className="commentP">{commentList.userentity.userNick}<span className="commentSpan">{commentList.content}</span></p>
+                              </div>
+                              <button onClick={()=>{CommentUpdate(commentList.commentId , "U");} } style={{margin: "0px 10px 0px"}}>수정</button>
+                              <button onClick={()=>{CommentUpdate(commentList.commentId , "D");} }>삭제</button>
+                            </div>  */
                   })}
               </div>
               <IconContext.Provider value={{size : "30px"}}>
