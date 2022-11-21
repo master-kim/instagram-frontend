@@ -112,12 +112,13 @@ export default function PostDetailPage() {
 
   // 댓글 영역 렌더링
   // 2022.11.24.김요한.추가 - 좋아요 렌더링
-  const detailCommentRendering = (commentList , postId) => {
+  const detailCommentRendering = (commentList , postId , commentUserImg) => {
       const result = [];
       if (cookies.loginId === commentList.userId) {
           result.push(
             <div className="post-detail-comment">
               <div className="post-detail-fake-comment">
+                <img src={commentUserImg.uuidFileNm} alt="post" style={{width: "20px" , height:"20px" , borderRadius : "30%"}}/>
                 <p className="commentP">{commentList.userentity.userNick}<span id={"comment_" + commentList.commentId} className="commentSpan">{commentList.content}</span></p>
               </div>
               {/* <button onClick={()=>{CommentUpdate(commentList.commentId , postId , "U");} } style={{margin: "0px 10px 0px"}}>수정</button> */}
@@ -129,6 +130,7 @@ export default function PostDetailPage() {
           result.push(
             <div className="post-detail-comment">
               <div className="post-detail-fake-comment">
+                <img src={commentUserImg.uuidFileNm} alt="post" style={{width: "20px" , height:"20px" , borderRadius : "30%"}}/>
                 <p className="commentP">{commentList.userentity.userNick}<span className="commentSpan">{commentList.content}</span></p>
               </div>
               <button onClick={()=>{doCommentLike(commentList.commentId , postId);} }><IoMdHeartEmpty/></button>
@@ -231,8 +233,8 @@ export default function PostDetailPage() {
                 </div>
               </div>
               <div style={{margin: "6px 20px 6px"}}>
-                  {postList.postCommentList.map((commentList) => {
-                   {return detailCommentRendering(commentList , postList.postId)}
+                  {postList.postCommentList.map((commentList , idx) => {
+                   {return detailCommentRendering(commentList , postList.postId , postList.commentUserImg[idx])}
                     /* return <div className="post-detail-comment">
                               <div className="post-detail-fake-comment">
                                 <p className="commentP">{commentList.userentity.userNick}<span className="commentSpan">{commentList.content}</span></p>
