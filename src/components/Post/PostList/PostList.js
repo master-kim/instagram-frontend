@@ -36,7 +36,7 @@ import  * as commonAxios from "../../../commonAxios";
  * 2022.11.07    김요한    팔로우맺기 추가
  * 2022.11.14    김요한    좋아요 기능추가
  * 2022.11.19    김요한    댓글 기능 추가
- * 2022.11.21    김요한    댓글 삭제 추가 (수정은 진행중)
+ * 2022.11.21    김요한    댓글 삭제 추가 (수정 사항 추후 도입)
  * -------------------------------------------------------------
  */
 
@@ -174,7 +174,7 @@ function PostList(props) {
     };
     
     // 댓글 영역 렌더링
-    // 2022.11.24.김요한.추가 - 좋아요 렌더링
+    // 2022.11.24.김요한.추가 - 댓글 영역 렌더링
     const detailCommentRendering = (commentList , postId , commentUserImg) => {
         const result = [];
         if (cookies.loginId === commentList.userId) {
@@ -182,9 +182,14 @@ function PostList(props) {
             <div className="post-detail-comment">
                 <div className="post-detail-fake-comment">
                 <img src={commentUserImg.uuidFileNm} alt="post" style={{width: "20px" , height:"20px" , borderRadius : "30%"}}/>
-                <p className="commentP">{commentList.userentity.userNick}<span id={"comment_" + commentList.commentId} className="commentSpan">{commentList.content}</span></p>
+                <p className="commentP">{commentList.userentity.userNick}
+                    <span id={"comment_" + commentList.commentId} className="commentSpan">{commentList.content}</span>
+                    {/* 수정 기능 추후 도입 */}
+                    {/* <input style={{marginLeft: "10px" }} id={"comment_" + commentList.commentId} value = {commentList.content} disabled/> */}
+                </p>
                 </div>
-                {/* <button onClick={()=>{CommentUpdate(commentList.commentId , postId, "U");} } style={{margin: "0px 10px 0px"}}>수정</button> */}
+                {/* 수정 기능 추후 도입 */}
+                {/* <button onClick={()=>{CommentUpdate(commentList.commentId ,postId, "U");} } style={{margin: "0px 10px 0px"}}>수정</button> */}
                 <button onClick={()=>{CommentUpdate(commentList.commentId ,postId , "D");} } style={{margin: "0px 10px 0px"}}>삭제</button>
                 <button onClick={()=>{doCommentLike(commentList.commentId, postId);} }><IoMdHeartEmpty/></button>
             </div> 
@@ -206,6 +211,8 @@ function PostList(props) {
     // 2022.11.21.김요한.추가 - 댓글 수정 ,삭제 [수정은 수정 폼 만들어서 넣어야하므로 추후 다시 만들 예정]
     const CommentUpdate = (commentId , postId, commentType) => {
     
+    const test = document.getElementById("comment" + commentId);
+        
     const commentData = {
         commentId      : commentId ,
         postId         : postId ,
@@ -300,12 +307,25 @@ function PostList(props) {
                                     <span>좋아요 {totalList.postLikeCnt[index]}개</span>
                                 </section>
                                 <div className="legend" >
-                                    <p>
-                                        {post.userentity.userNick}
+                                <div class="post-detail-contents">
+                                    <div class="infos-post">
+                                        {totalList.postUserImgList.map((postImgList) => {
+                                            if(post.userentity.userId === postImgList.commonId){
+                                                return <img className="img-header-post" src={postImgList.uuidFileNm} alt="profile"/>
+                                            } else {;}
+                                        })}
+                                        <p>{post.userentity.userNick}</p>
                                         <span>
                                             {post.postContent}
                                         </span>
-                                    </p>
+                                    </div>
+                                </div>
+                                {/* <p>
+                                    {post.userentity.userNick}
+                                    <span>
+                                        {post.postContent}
+                                    </span>
+                                </p> */}
                                 </div>
                                 <div style={{margin: "6px 0 6px"}}>
                                     {totalList.postCommentList[index].map((commentList , idx) => {
