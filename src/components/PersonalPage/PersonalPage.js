@@ -65,6 +65,10 @@ function PersonalPage() {
   const [loading, setLoading] = useState(true);
   const [totalList, resultData] = useState([]);
 
+  const pageMove = (url , postId) => {
+    navigate(url, {state: {postId :postId}});
+  };
+
   useEffect(() => {
 
       if (userId === undefined) {
@@ -77,7 +81,7 @@ function PersonalPage() {
           setLoading(false);
         }
       }
-      return () => {
+        return () => {
       };
   }, []); 
   
@@ -116,11 +120,11 @@ function PersonalPage() {
       <div className="gallery">
       {totalList.postList.map((post, index) => (
                     <div className="gallery-item" tabIndex="0">
-                        <img src={totalList.fileList[index].uuidFileNm} className="gallery-image" alt="" />
-                        <div className="gallery-item-info">
+                        <img src={totalList.fileList[index].uuidFileNm}className="gallery-image" alt="test" />
+                        <div className="gallery-item-info" onClick={() => {pageMove( '/post-detail-page' , post.postId);}}>
                             <ul>
-                                <li className="gallery-item-likes"><span className="visually-hidden">Likes:</span><FaHeart className="io-text" aria-hidden="true"/> 56</li>
-                                <li className="gallery-item-comments"><span className="visually-hidden">Comments:</span><FaComment className="io-text fa-comment" aria-hidden="true" /> 2</li>
+                                <li className="gallery-item-likes"><span className="visually-hidden">Likes:</span><FaHeart className="io-text" aria-hidden="true"/> {totalList.postLikeCnt[index]}</li>
+                                <li className="gallery-item-comments"><span className="visually-hidden">Comments:</span><FaComment className="io-text fa-comment" aria-hidden="true" /> {totalList.postCommentCnt[index]}</li>
                             </ul>
                         </div>
                     </div>
