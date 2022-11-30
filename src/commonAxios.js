@@ -37,10 +37,7 @@ export  async function commonMultiPart(url, params , callback) {
         method: 'post',
         baseURL: 'http://localhost:9999',
         data: params,
-        withCredentials: true,
-        headers: {
-          'content-type': 'multipart/form-data'
-      }
+        withCredentials: true
       }
     ).
     then(function (response) {
