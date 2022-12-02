@@ -1,219 +1,219 @@
 body{
-  position: relative;
-}
-/* 모달창을 화면 중앙. 최상단에 노출 */
-.header-modal-container {
-  
-    width:100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-  
-    /* 최상단 위치 */
-    z-index: 999;
+    position: relative;
+  }
+  /* 모달창을 화면 중앙. 최상단에 노출 */
+  .header-modal-container {
     
-    /* 중앙 배치 */
-    /* top, bottom, left, right 는 브라우저 기준으로 작동한다. */
-    /* translate는 본인의 크기 기준으로 작동한다. */
-    position:fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+      width:100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+    
+      /* 최상단 위치 */
+      z-index: 999;
+      
+      /* 중앙 배치 */
+      /* top, bottom, left, right 는 브라우저 기준으로 작동한다. */
+      /* translate는 본인의 크기 기준으로 작동한다. */
+      position:fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    
   
-
-   
+     
+    }
+    
+    /* 모달창 내부 X버튼 */
+    .header-close {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
+    .post-upload-box {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      transform: translate(50%, 20%);
+      
   }
   
-  /* 모달창 내부 X버튼 */
-  .header-close {
-    position: absolute;
-    right: 10px;
-    top: 10px;
+  .post-upload-box-title {
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      text-align: center;
+      width: 100%;
+      display: flex;
+      border-bottom: 1px solid lightgrey;
   }
-  .post-upload-box {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    transform: translate(50%, 20%);
-    
-}
-
-.post-upload-box-title {
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    text-align: center;
-    width: 100%;
-    display: flex;
-    border-bottom: 1px solid lightgrey;
-}
-
-.post-upload-box-inner {
-    display: block;
-    justify-content: center;
-    align-items: center;
-    width: 50vw;
-    height: 69.2vh;
-    ;
-    background: white;
-    border-radius: 15px;
-}
-
-.post-upload-box-inner-inner {
-    display: flex;
-    width: 100%;
-
-    justify-content: center;
-    align-items: center;
-    height: 62vh;
-
-}
-
-.post-upload-username {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border-secondary);
-    margin: 10px;
-}
-
-.post-upload-contents {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 10px;
-}
-
-.post-upload-username .img-header-post {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-}
-
-.post-upload-contents .img-header-post {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-}
-
-.infos-post {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-.img-post-upload {
-    width: 70%;
-    background-color: black;
   
-}
-
-.img-post-upload img {
-    width: 85%;
-    margin: 0 auto;
-}
-
-.post-upload-footer-post {
-    background: white;
-    width: 50%;
-    height: 100%;
-    display: grid;
-
-}
-
-.post-upload-engagement-post {
-    display: flex;
-    justify-content: space-between;
-    margin: 10px;
-}
-
-.post-upload-engagement-post .icons-1 {
-    display: flex;
-    gap: 16px;
-}
-
-.icon {
-    cursor: pointer;
-}
-
-.post-upload-like {
-    margin: 10px;
-}
-
-.post-upload-like span {
-    font-size: 15px;
-    font-weight: 500;
-
-}
-
-.post-upload-legend {
-    margin: 10px;
-}
-
-.post-upload-legend p span {
-    font-weight: 500;
-    margin: 10px;
-}
-
-.post-upload-time-post time {
-    font-size: 11px;
-    color: var(--secondary);
-    margin: 10px;
-}
-
-.post-upload-comment {
-    border-top: 1px solid var(--border-secondary);
-    margin: 10px;
-
-    display: flex;
-}
-
-.post-upload-fake-comment {
-    display: flex;
-    align-items: center;
-    flex: 1;
-    gap: 16px;
-    margin-top: 10px;
-
-
-
-}
-
-
-.post-upload-fake-comment input {
-    font-size: 16px;
-    border: 0;
-}
-
-.post-upload-comment button {
-    color: var(--quartary);
-    font-weight: 500;
-    cursor: pointer;
-    border: 0;
-}
-
-.icon-arrow {
-    cursor: pointer;
-    font-size: 400%;
-    background-color: white;
-    height: 0;
-
-}
-
-.icon-arrow svg {
-    border-radius: 50%;
-    background: white;
-}
-
-.info-button {
-    cursor: pointer;
-}
-
-.upload-close {
-    position: absolute;
-    line-height: 100%;
-    color: white;
-    cursor: pointer;
-    top: 0;
-    right: 0;
-}
+  .post-upload-box-inner {
+      display: block;
+      justify-content: center;
+      align-items: center;
+      width: 50vw;
+      height: 69.2vh;
+      ;
+      background: white;
+      border-radius: 15px;
+  }
+  
+  .post-upload-box-inner-inner {
+      display: flex;
+      width: 100%;
+  
+      justify-content: center;
+      align-items: center;
+      height: 62vh;
+  
+  }
+  
+  .post-upload-username {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-secondary);
+      margin: 10px;
+  }
+  
+  .post-upload-contents {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 10px;
+  }
+  
+  .post-upload-username .img-header-post {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+  }
+  
+  .post-upload-contents .img-header-post {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+  }
+  
+  .infos-post {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+  }
+  
+  .img-post-upload {
+      width: 70%;
+      background-color: black;
+    
+  }
+  
+  .img-post-upload img {
+      width: 85%;
+      margin: 0 auto;
+  }
+  
+  .post-upload-footer-post {
+      background: white;
+      width: 50%;
+      height: 100%;
+      display: grid;
+  
+  }
+  
+  .post-upload-engagement-post {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px;
+  }
+  
+  .post-upload-engagement-post .icons-1 {
+      display: flex;
+      gap: 16px;
+  }
+  
+  .icon {
+      cursor: pointer;
+  }
+  
+  .post-upload-like {
+      margin: 10px;
+  }
+  
+  .post-upload-like span {
+      font-size: 15px;
+      font-weight: 500;
+  
+  }
+  
+  .post-upload-legend {
+      margin: 10px;
+  }
+  
+  .post-upload-legend p span {
+      font-weight: 500;
+      margin: 10px;
+  }
+  
+  .post-upload-time-post time {
+      font-size: 11px;
+      color: var(--secondary);
+      margin: 10px;
+  }
+  
+  .post-upload-comment {
+      border-top: 1px solid var(--border-secondary);
+      margin: 10px;
+  
+      display: flex;
+  }
+  
+  .post-upload-fake-comment {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      gap: 16px;
+      margin-top: 10px;
+  
+  
+  
+  }
+  
+  
+  .post-upload-fake-comment input {
+      font-size: 16px;
+      border: 0;
+  }
+  
+  .post-upload-comment button {
+      color: var(--quartary);
+      font-weight: 500;
+      cursor: pointer;
+      border: 0;
+  }
+  
+  .icon-arrow {
+      cursor: pointer;
+      font-size: 400%;
+      background-color: white;
+      height: 0;
+  
+  }
+  
+  .icon-arrow svg {
+      border-radius: 50%;
+      background: white;
+  }
+  
+  .info-button {
+      cursor: pointer;
+  }
+  
+  .upload-close {
+      position: absolute;
+      line-height: 100%;
+      color: white;
+      cursor: pointer;
+      top: 0;
+      right: 0;
+  }

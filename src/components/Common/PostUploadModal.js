@@ -100,6 +100,59 @@ useEffect(()=>{
   {
     /* 사진 업로드 페이지 */
   }
+  function selectPostStory() {
+    return (
+      <>
+        <div className="post-upload-box-inner">
+          <div
+            className="post-upload-box-title"
+            style={{ justifyContent: "center" }}
+          >
+            <div style={{ "font-size": "1.8em" }}>새 게시물 만들기</div>
+          </div>
+          <div
+            className="post-upload-box-inner-inner"
+            style={{ display: "block", padding: "15%" }}
+          >
+            {/* 게시글 또는 스토리 선택영역 */}
+            
+            <div style={{ textAlign: "center",padding:"30px" }}>
+              <label
+                for="upload"
+                style={{
+                  cursor: "pointer",
+                  padding: "8px 6px",
+                  background: "rgb(0,169,246)",
+                  color: "white",
+                  "border-radius": "10px",
+                  "font-size": "1.5rem",
+                }}
+              >
+                게시물 올리기
+              </label>
+             
+            </div>
+            <div style={{ textAlign: "center" }}>
+              <label
+                for="upload"
+                style={{
+                  cursor: "pointer",
+                  padding: "8px 6px",
+                  background: "rgb(0,169,246)",
+                  color: "white",
+                  "border-radius": "10px",
+                  "font-size": "1.5rem",
+                }}
+              >
+                스토리 올리기
+              </label>
+              
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
   function noneUpload() {
     return (
       <>
@@ -272,7 +325,9 @@ useEffect(()=>{
           }}
           className="post-upload-box"
         >
-          {postImages == false ? noneUpload() : uploadedPage()}
+          {selectPostStory()}
+
+          {/* {postImages == false ? noneUpload() : uploadedPage()} */}
         </div>
         <div class="upload-close" onClick={onClose}  >
           <IoIosClose style={{ width: "5vw", height: "9vh" }} />
