@@ -6,7 +6,7 @@ import { BsArrowLeft, BsFillCloudDownloadFill } from "react-icons/bs";
 import {
   IoMdHeartEmpty,
   IoIosArrowBack,
-  IoIosArrowForward,
+  IoIosArrowhtmlForward,
   IoIosClose,
 } from "react-icons/io";
 import { BsChat, BsEmojiSmile, BsBookmark } from "react-icons/bs";
@@ -35,7 +35,7 @@ function PostUploadModal({ open, onClose }) {
   };
 useEffect(()=>{
   if(!open){setPostImages([])}
-})
+},[])
   const onPostImage = (e) => {
     if (e.target.files[0]) {
       // 2022.11.12.김요한.추가 - userImage 는 화면에 바뀌는 데이터 형식(String) , dataImg는 실질적인 데이터 전송 형식 (File) // 합칠 수 있으면 합치길 원함!
@@ -64,21 +64,21 @@ useEffect(()=>{
     // const result = commonUtils.isEqualCheck(userPwd, userPwdChk);
 
     if (postImages.length >= 1) {
-      // 2022.11.12.김요한.추가 - FormData 선언 및 inputData => 이 부분은 헤더를 application/json 로 데이터 변경
-      const formData = new FormData();
+      // 2022.11.12.김요한.추가 - htmlFormData 선언 및 inputData => 이 부분은 헤더를 application/json 로 데이터 변경
+      const htmlFormData = new htmlFormData();
       const inputs = new Blob([JSON.stringify(postData)], {
         type: "application/json",
       });
-      formData.append("fileInfo", dataImages);
-      formData.append("userInfo", inputs);
+      htmlFormData.append("fileInfo", dataImages);
+      htmlFormData.append("userInfo", inputs);
 
       await commonAxios.commonMultiPart(
         "/user/userRegister",
-        formData,
+        htmlFormData,
         callback
       );
 
-      function callback(data) {
+      const callback=(data)=> {
         if (data[0].resultCd === "SUCC") {
           navigate("/login");
           console.log(data);
@@ -100,7 +100,7 @@ useEffect(()=>{
   {
     /* 사진 업로드 페이지 */
   }
-  function selectPostStory() {
+  const selectPostStory=()=> {
     return (
       <>
         <div className="post-upload-box-inner">
@@ -108,7 +108,7 @@ useEffect(()=>{
             className="post-upload-box-title"
             style={{ justifyContent: "center" }}
           >
-            <div style={{ "font-size": "1.8em" }}>새 게시물 만들기</div>
+            <div style={{ "fontSize": "1.8em" }}>새 게시물 만들기</div>
           </div>
           <div
             className="post-upload-box-inner-inner"
@@ -118,14 +118,14 @@ useEffect(()=>{
             
             <div style={{ textAlign: "center",padding:"30px" }}>
               <label
-                for="upload"
+                htmlFor="upload"
                 style={{
                   cursor: "pointer",
                   padding: "8px 6px",
                   background: "rgb(0,169,246)",
                   color: "white",
-                  "border-radius": "10px",
-                  "font-size": "1.5rem",
+                  "borderRadius": "10px",
+                  "fontSize": "1.5rem",
                 }}
               >
                 게시물 올리기
@@ -134,14 +134,14 @@ useEffect(()=>{
             </div>
             <div style={{ textAlign: "center" }}>
               <label
-                for="upload"
+                htmlFor="upload"
                 style={{
                   cursor: "pointer",
                   padding: "8px 6px",
                   background: "rgb(0,169,246)",
                   color: "white",
-                  "border-radius": "10px",
-                  "font-size": "1.5rem",
+                  "borderRadius": "10px",
+                  "fontSize": "1.5rem",
                 }}
               >
                 스토리 올리기
@@ -153,7 +153,7 @@ useEffect(()=>{
       </>
     );
   }
-  function noneUpload() {
+  const noneUpload=()=> {
     return (
       <>
         <div className="post-upload-box-inner">
@@ -161,7 +161,7 @@ useEffect(()=>{
             className="post-upload-box-title"
             style={{ justifyContent: "center" }}
           >
-            <div style={{ "font-size": "1.8em" }}>새 게시물 만들기</div>
+            <div style={{ "fontSize": "1.8em" }}>새 게시물 만들기</div>
           </div>
           <div
             className="post-upload-box-inner-inner"
@@ -178,14 +178,14 @@ useEffect(()=>{
             </div>
             <div style={{ textAlign: "center" }}>
               <label
-                for="upload"
+                htmlFor="upload"
                 style={{
                   cursor: "pointer",
                   padding: "8px 6px",
                   background: "rgb(0,169,246)",
                   color: "white",
-                  "border-radius": "10px",
-                  "font-size": "1.5rem",
+                  "borderRadius": "10px",
+                  "fontSize": "1.5rem",
                 }}
               >
                 컴퓨터에서 선택
@@ -207,7 +207,7 @@ useEffect(()=>{
   {
     /* 사진 업데이트 직전 페이지! */
   }
-  function uploadedPage() {
+  const uploadedPage=()=> {
     return (
       <>
         <div className="post-upload-box-inner">
@@ -215,7 +215,7 @@ useEffect(()=>{
             <div style={{ width: "3vw" }}>
               <BsArrowLeft
                 style={{
-                  "font-size": "20pt",
+                  "fontSize": "20pt",
                   display: "flex",
                   cursor: "pointer",
                 }}
@@ -225,7 +225,7 @@ useEffect(()=>{
 
             <div
               style={{
-                "font-size": "1.5em",
+                "fontSize": "1.5em",
                 color: "rgb(0 149 246)",
                 cursor: "pointer",
               }}
@@ -266,7 +266,7 @@ useEffect(()=>{
                   border: "0",
                   resize: "none",
                   margin: "0 10px 10px 10px",
-                  "font-size": "1.7rem",
+                  "fontSize": "1.7rem",
                 }}
               ></textarea>
               <IconContext.Provider value={{ size: "30px" }}>
@@ -329,7 +329,7 @@ useEffect(()=>{
 
           {/* {postImages == false ? noneUpload() : uploadedPage()} */}
         </div>
-        <div class="upload-close" onClick={onClose}  >
+        <div className="upload-close" onClick={onClose}  >
           <IoIosClose style={{ width: "5vw", height: "9vh" }} />
         </div>
       </div>
