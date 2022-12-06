@@ -81,7 +81,6 @@ function PostList(props) {
             alert('세션이 만료되었습니다.')
             navigate('/login')
         } else {
-        
             commonAxios.commonAxios('/post/postList' , {} , callback);
 
             function callback(data) {
@@ -89,9 +88,10 @@ function PostList(props) {
                 setLoading(false);
             }
         }
-        
+        return () => {
+        };
     },
-    [commonAxios]); 
+    []); 
 
     // 2022.11.07.김요한.추가 - 팔로우맺기
     const doFollow = (followId) => {
