@@ -17,8 +17,22 @@ import { BsChat, BsEmojiSmile, BsBookmark } from "react-icons/bs";
 import { IconContext } from "react-icons/lib";
 import * as commonAxios from "../../commonAxios";
 import { RiEyeCloseFill } from "react-icons/ri";
+import { useCookies } from 'react-cookie';
+
+/*
+ * 설명 : PostUploadModal.js
+ * -------------------------------------------------------------
+ * 작업일         작업자    작업내용
+ * -------------------------------------------------------------
+ * 2022.11.29    김영일    최초작성
+ * 2022.12.07    김요한    모달창을 통한 게시글 업로드 추가
+ * -------------------------------------------------------------
+ */
 
 function PostUploadModal({ open, onClose }) {
+
+  const [cookies, setCookie , removeCookie] = useCookies(['loginCookie']); // 쿠키 훅 
+
   const fileInput = useRef(null);
   const navigate = useNavigate();
   const pageMove = (url) => {
@@ -32,6 +46,12 @@ function PostUploadModal({ open, onClose }) {
   };
   const [postImages, setPostImages] = useState([]);
   const [dataImages, setDataImages] = useState([]);
+  const [fileFolderType] = useState("");
+  const [userId] = useState("");
+  const [postContent, setPostContent] = useState("");
+  const [postLocation] = useState("");
+  const [postCommentYn] = useState("");
+  const [postLikeYn] = useState("");
   const [postInfo, setPostInfo] = useState("");
   const [back, setBack] = useState(false);
   const [chooseModal, setChooseModal] = useState(true);
@@ -39,8 +59,14 @@ function PostUploadModal({ open, onClose }) {
 
   const postData = {
     postImages,
-    postInfo,
-  };
+    fileFolderType,
+    userId,
+    postContent,
+    postLocation,
+    postCommentYn,
+    postLikeYn
+  }
+
   useEffect(() => {
     // 모달 밖을 클릭하거나 취소버튼 클릭시 모든 데이터가 원래로 돌아가게 된다.
     if (!open) {
@@ -59,7 +85,6 @@ function PostUploadModal({ open, onClose }) {
   };
   const onPostImage = (e) => {
     if (e.target.files[0]) {
-      // 2022.11.12.김요한.추가 - userImage 는 화면에 바뀌는 데이터 형식(String) , dataImg는 실질적인 데이터 전송 형식 (File) // 합칠 수 있으면 합치길 원함!
       setPostImages(() => e.target.files[0]);
       setDataImages(() => e.target.files[0]);
       setChoosePost(true);
@@ -82,29 +107,29 @@ function PostUploadModal({ open, onClose }) {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
 
-    // const result = commonUtils.isEqualCheck(userPwd, userPwdChk);
+    // 추후 데이터 postLocation , postCommentYn , postLikeYn 값 라디오 버튼 등으로 변경 가능하도록 변경 예정
+    postData.fileFolderType = "post";
+    postData.userId = cookies.loginId;
+    postData.postLocation = "";
+    postData.postCommentYn = "Y";
+    postData.postLikeYn = "Y";
 
     if (postImages.length >= 1) {
-      // 2022.11.12.김요한.추가 - htmlFormData 선언 및 inputData => 이 부분은 헤더를 application/json 로 데이터 변경
-      const htmlFormData = new htmlFormData();
-      const inputs = new Blob([JSON.stringify(postData)], {
-        type: "application/json",
-      });
-      htmlFormData.append("fileInfo", dataImages);
-      htmlFormData.append("userInfo", inputs);
+      // 2022.12.07.김요한.수정 - 전송 데이터 선언
+      const formData = new FormData();
+      const inputs = new Blob([JSON.stringify(postData)], {type: "application/json",});
+      formData.append("fileInfo", dataImages);
+      formData.append("postInfo", inputs);
 
-      await commonAxios.commonMultiPart(
-        "/user/userRegister",
-        htmlFormData,
-        callback
-      );
+      await commonAxios.commonMultiPart("/post/postCreate",formData,callback);
 
       const callback = (data) => {
         if (data[0].resultCd === "SUCC") {
-          navigate("/login");
-          console.log(data);
+          setChooseModal(false);
+          navigate("/mainpage");
+        }else {
+          alert("error");
         }
       };
     } else {
@@ -146,10 +171,7 @@ function PostUploadModal({ open, onClose }) {
                 {/* 게시글 또는 스토리 선택영역 */}
 
                 <div style={{ textAlign: "center", padding: "30px" }}>
-                  <label
-                    onClick={() => onChooseModal()}
-                    // onClick={()=>{postImages == false ? noneUpload() : uploadedPage()}}
-                    htmlFor="postUpload"
+                  <label onClick={() => onChooseModal()} htmlFor="postUpload"
                     style={{
                       cursor: "pointer",
                       padding: "8px 6px",
@@ -285,15 +307,8 @@ function PostUploadModal({ open, onClose }) {
                     onClick={() => goToBack()}
                   />
                 </div>
-
-                <div
-                  style={{
-                    fontSize: "1.5em",
-                    color: "rgb(0 149 246)",
-                    cursor: "pointer",
-                  }}
-                >
-                  공유하기
+                <div>
+                    <button style={{ border:"none" , fontSize: "1.5em", color: "rgb(0 149 246)",cursor: "pointer"}} onClick={() => handleSubmit()}>공유하기</button>
                 </div>
               </div>
               <div className="post-upload-box-inner-inner">
@@ -312,13 +327,14 @@ function PostUploadModal({ open, onClose }) {
                     <div className="infos-post">
                       <img
                         className="img-header-post"
-                        src={
+                        src={cookies.userImg.uuidFileNm}
+                        /* src={
                           "https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces"
-                        }
+                        } */
                         // src={`${postList.fileInfo[0].uuidFileNm}`}
                         alt="post"
                       />
-                      {/* <p>{postList.postInfo.userId}</p> */}
+                      <p>{cookies.loginNick}</p>
                     </div>
                   </div>
                   <textarea

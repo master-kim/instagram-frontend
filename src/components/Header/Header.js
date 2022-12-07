@@ -27,6 +27,7 @@ import "./Header.css";
 
 function Header(props) {
   const [cookies, setCookie, removeCookie] = useCookies(["loginCookie"]); // 쿠키 훅
+
   //모달창 노출 여부 state
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -52,6 +53,7 @@ function Header(props) {
         navigate("/login");
         removeCookie("loginId"); // 쿠키 loginId를 지운다
         removeCookie("loginNick"); // 쿠키 loginId를 지운다
+        removeCookie("userImg"); // 쿠키 loginId를 지운다
       } else {
         alert("서버오류");
       }
@@ -60,6 +62,7 @@ function Header(props) {
 
   return (
     <header className="header">
+
       <div className="container">
         <img
           className="logo"
@@ -87,9 +90,8 @@ function Header(props) {
                         - 추후 채팅 기능 추가 여부 논의
                         */}
             <div>
-              <BsPlusSquare style={{ cursor: "pointer" }} onClick={showModal} />
+              <BsPlusSquare style={{ cursor: "pointer" }} onClick={showModal}/>
               <PostUploadModal open={modalOpen} onClose={closeModal} />
-              {/* {modalOpen && <PostUploadModal setModalOpen = {setModalOpen} />} */}
             </div>
             <div>
               <FiHeart style={{ cursor: "pointer" }} />

@@ -219,8 +219,7 @@ export default function PostDetailPage() {
                   <div className="post-detail-footer-post">
                     <div className="post-detail-username">
                       <div className="infos-post">
-                      <img className="img-header-post" src={postList.postUserImg.uuidFileNm} alt="post"
-                      />
+                      <img className="img-header-post" src={postList.postUserImg.uuidFileNm} alt="post"/>
                   <p>{postList.postInfo.userentity.userNick}</p>
                 </div>
                 <FiMoreHorizontal className="info-button" />
