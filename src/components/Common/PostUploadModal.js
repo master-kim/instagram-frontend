@@ -154,10 +154,11 @@ function PostUploadModal({ open, onClose }) {
               e.stopPropagation();
             }}
             className="post-upload-box"
+            style={{"width":" 30vw", "transform": "translate(115%, 50%)"}}
           >
             {/* Post를 선택하면 noneUpload()가 실행됨 */}
 
-            <div className="post-upload-box-inner">
+            <div className="post-upload-box-inner" style={{    "height": "50vh"}}>
               <div
                 className="post-upload-box-title"
                 style={{ justifyContent: "center" }}
@@ -166,7 +167,7 @@ function PostUploadModal({ open, onClose }) {
               </div>
               <div
                 className="post-upload-box-inner-inner"
-                style={{ display: "block", padding: "15%" }}
+                style={{ display: "block", padding: "15%","height": "44vh" }}
               >
                 {/* 게시글 또는 스토리 선택영역 */}
 
@@ -230,6 +231,7 @@ function PostUploadModal({ open, onClose }) {
                 className="post-upload-box-title"
                 style={{ justifyContent: "center" }}
               >
+                
                 <div style={{ fontSize: "1.8em" }}>새 게시물 만들기</div>
               </div>
               <div
@@ -348,24 +350,7 @@ function PostUploadModal({ open, onClose }) {
                       fontSize: "1.7rem",
                     }}
                   ></textarea>
-                  <IconContext.Provider value={{ size: "30px" }}>
-                    <div className="post-upload-engagement-post">
-                      <div className="icons-1">
-                        <div className="icon">
-                          <IoMdHeartEmpty />
-                        </div>
-                        <div className="icon">
-                          <BsChat />
-                        </div>
-                        <div className="icon">
-                          <FiSend />
-                        </div>
-                      </div>
-                      <div className="icon">
-                        <BsBookmark />
-                      </div>
-                    </div>
-                  </IconContext.Provider>
+                 
                   <div className="post-upload-legend">
                     <p>
                       {/* <span>{postList.postInfo.userId}</span>  */}
@@ -375,17 +360,7 @@ function PostUploadModal({ open, onClose }) {
                   <div className="post-upload-time-post">
                     {/* <time>{postList.postInfo.createDt}</time> */}
                   </div>
-                  <div className="post-upload-comment">
-                    <div className="post-upload-fake-comment">
-                      <IconContext.Provider value={{ size: "25px" }}>
-                        <div className="icon">
-                          <BsEmojiSmile />
-                        </div>
-                      </IconContext.Provider>
-                      <input placeholder="댓글달기..." />
-                    </div>
-                    <button onClick={() => pageMove("/mainpage")}>게시</button>
-                  </div>
+                  
                 </div>
               </div>
             </div>
